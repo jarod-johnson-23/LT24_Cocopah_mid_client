@@ -1,0 +1,25 @@
+#file-area {
+  border: 3px dashed #c3c3c3;
+  width: 198px;
+  height: calc(100% - 56px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  margin-top: 15px;
+  margin-right: 0px;
+  padding: 10px;
+  transition: 0.3s;
+}
+
+#file-area:hover {
+  cursor: pointer;
+  border: 3px dashed #1897d3;
+  scale: 1.014;
+}
+
+#file-area p {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}

@@ -1,0 +1,254 @@
+.tab {
+  min-width: 30px;
+  height: 100%;
+  background-color: #1897d3;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: calc(100% - 30px);
+  cursor: pointer;
+}
+
+.minimized {
+  height: 0px;
+  border-radius: 14px;
+}
+
+.mini-btn {
+  color: #ffffff;
+  margin: 5px 0 0 5px;
+}
+
+.mini-btn:hover {
+  cursor: pointer;
+}
+
+#verticalLine {
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+#verticalLine.minus {
+  transform: rotate(-90deg);
+  transform: translateX(1px);
+}
+
+.auto-height {
+  height: auto;
+}
+
+.zero-height {
+  height: 0;
+}
+
+.input-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.list {
+  list-style: none;
+  padding: 5px;
+  width: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100% - 40px);
+  padding-right: 5px;
+  /* margin-right: 25px; */
+  height: calc(100% - 40px);
+}
+
+.box {
+  width: 170px;
+  height: fit-content;
+  /* margin-bottom: 5px; */
+  background-color: #dfdfdf;
+  border: 1.5px solid #1897d3;
+  border-radius: 5px;
+  padding: 7px 7px 7px 1px;
+  /* margin-right: 10px; */
+  color: #555;
+}
+
+.box:hover {
+  cursor: pointer;
+}
+
+.side-menu {
+  position: fixed;
+  top: calc(50vh - 200px);
+  left: 0;
+  height: 400px;
+  background-color: #f1f1f1dd;
+  color: #fff;
+  transition: width 0.3s;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-radius: 0 14px 14px 0;
+  width: fit-content;
+  border: 2px solid #1897d3;
+  border-left: none;
+}
+
+.side-menu.collapsed {
+  max-width: 30px;
+}
+
+.side-menu.expanded {
+  max-width: 1000px;
+  transition: max-width 0.3s ease;
+  width: fit-content;
+}
+
+.side-menu-content {
+  padding: 15px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  transition-delay: 0.1s;
+  margin-right: 35px;
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  height: calc(100% - 30px);
+}
+
+.side-menu.expanded .side-menu-content {
+  opacity: 1;
+}
+
+.input-cols {
+  color: #555555;
+  margin: 0px 0px 5px 10px;
+  padding-right: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 360px;
+}
+
+.input-cols ul {
+  border: 2px dashed #c3c3c3;
+  border-radius: 5px;
+  min-width: 160px;
+  min-height: 35px;
+  height: fit-content;
+  width: fit-content;
+  overflow-y: hidden;
+  /* margin-bottom: -20px; */
+}
+
+h4 {
+  margin-bottom: 0px;
+}
+
+.main-list li {
+  margin-bottom: 10px;
+}
+
+.zipcode-list {
+  margin-top: 5px;
+}
+
+.sec-data-list {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.sec-data-list li:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.inside-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}
+
+.inside-box svg {
+  min-height: 20px;
+  min-width: 20px;
+  margin-right: 5px;
+}
+
+.submit-btn {
+  width: 220px;
+  height: 50px;
+  background-color: #1897d3;
+  border: 1.5px solid #1897d3;
+  font-weight: 600;
+  color: #fff;
+  font-size: 18px;
+  transition: 0.15s;
+  border-radius: 4px;
+}
+
+.submit-btn:hover {
+  cursor: pointer;
+  background-color: #fff;
+  color: #1897d3;
+}
+
+.copy-btn {
+  margin-bottom: 5px;
+  margin-left: 6px;
+}
+
+.copy-btn:hover {
+  cursor: pointer;
+}
+
+.final-section {
+  display: flex;
+  flex-direction: column;
+  /* margin-top: 25px; */
+}
+
+.copy-link-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  text-decoration: underline;
+  color: #1897d3;
+  width: 50%;
+  margin-top: 15px;
+}
+
+.copy-link-section:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.input-label {
+  color: #555555;
+}
+
+.text-input {
+  height: 25px;
+  margin: 2px 0 15px 0;
+  font-size: 16px;
+  border: 2px solid #1897d3;
+  border-radius: 4px;
+  padding-left: 2px;
+}
+
+.submittedSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.download-section {
+  margin: 10px 0 10px 0;
+}
+
+.download-section a {
+  color: #1897d3;
+  text-decoration: underline;
+}
+
+.download-section a:hover {
+  text-decoration: none;
+}
