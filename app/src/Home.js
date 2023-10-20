@@ -27,7 +27,7 @@ function Home() {
       <InputSection onApiDataReceived={handleApiData} className="side-menu" />
 
       <iframe
-        src="http://localhost:5000/heatmap/result/default.html"
+        src="https://py.laneterraleverapi.org/heatmap/result/default.html"
         id="heatmap-iframe"
         width="100%"
       ></iframe>

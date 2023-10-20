@@ -156,7 +156,7 @@ function InputSection({ onApiDataReceived }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/heatmap/zipcode",
+        "https://py.laneterraleverapi.org/heatmap/zipcode",
         data
       );
       console.log("Data uploaded successfully:", response.data);
