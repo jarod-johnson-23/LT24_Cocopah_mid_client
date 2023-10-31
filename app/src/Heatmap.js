@@ -1,9 +1,9 @@
-import "./Home.css";
+import "./Heatmap.css";
 import { useDropzone } from "react-dropzone";
 import InputSection from "./components/InputSection";
 import { useState, useEffect } from "react";
 
-function Home() {
+function Heatmap() {
   const [apiData, setApiData] = useState("");
 
   const handleApiData = (data) => {
@@ -36,4 +36,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Heatmap;

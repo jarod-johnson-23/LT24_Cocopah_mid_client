@@ -160,7 +160,7 @@ function InputSection({ onApiDataReceived }) {
         data
       );
       console.log("Data uploaded successfully:", response.data);
-      if (response.data.status == "success") {
+      if (response.data.status === "success") {
         onApiDataReceived(response.data.heatmap_url);
         setHeatmapUrl(response.data.heatmap_url);
       }
@@ -206,8 +206,9 @@ function InputSection({ onApiDataReceived }) {
       onClick={toggleMenu}
     >
       <div className="side-menu-content">
-        <FileDropComponent onFileUpload={onFileUpload} />
-
+        <div className="file-div">
+          <FileDropComponent onFileUpload={onFileUpload} />
+        </div>
         <DragDropContext
           onDragEnd={handleOnDragEnd}
           onDragStart={handleOnDragStart}
@@ -451,9 +452,7 @@ function InputSection({ onApiDataReceived }) {
               </svg>
             </div>
             <div className="download-section">
-              <a onClick={handleDownload} href="#">
-                Download File
-              </a>
+              <a onClick={handleDownload}>Download File</a>
             </div>
           </div>
         </div>

@@ -1,14 +1,23 @@
 import "./App.css";
-import { HashRouter, Routes, Route } from "react-router-dom";
-import Home from "./Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Heatmap from "./Heatmap";
+import Homepage from "./Homepage";
+import ToyotaMedia from "./ToyotaMedia";
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} exact />
+        <Route path="/" element={<Homepage />} exact />
+        <Route path="/zipcode_heatmap" element={<Heatmap />} exact />
+        <Route
+          path="/toyota_media_buy_processing"
+          element={<ToyotaMedia />}
+          exact
+        />
+        <Route path="*" element={<Homepage />} exact />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

@@ -61,6 +61,14 @@
   height: calc(100% - 40px);
 }
 
+.file-div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .box {
   width: 170px;
   height: fit-content;
