@@ -7,14 +7,14 @@ import axios from "axios";
 function ToyotaMedia() {
   const [mediaBuyFile, setMediaBuyFile] = useState(null);
   const [modelRotFile, setModelRotFile] = useState(null);
-  const [monthCode, setMonthCode] = useState("");
-  const [yearCode, setYearCode] = useState("");
+  const [monthCode, setMonthCode] = useState("1");
+  const [yearCode, setYearCode] = useState("2023");
 
-  const onMediaBuyFileUpload = (uploadedFile) => {
+  const onMediaBuyFileUpload = (extractedColumns, uploadedFile) => {
     setMediaBuyFile(uploadedFile);
   };
 
-  const onModelRotFileUpload = (uploadedFile) => {
+  const onModelRotFileUpload = (extractedColumns, uploadedFile) => {
     setModelRotFile(uploadedFile);
   };
 
@@ -23,21 +23,37 @@ function ToyotaMedia() {
     data.append("YC", yearCode);
     data.append("MC", monthCode);
     if (mediaBuyFile) {
-      data.append("toyota_data", mediaBuyFile);
+      data.append("toyota_file", mediaBuyFile);
     } else {
       return 0;
     }
     if (modelRotFile) {
-      data.append("coop_data", modelRotFile);
+      data.append("coop_file", modelRotFile);
     } else {
       return 0;
     }
+
     try {
       const response = await axios.post(
         "http://localhost:5000/toyota_media_buy_processing",
-        data
+        data,
+        { responseType: "blob" }
       );
-      console.log("Data uploaded successfully:", response.data);
+      const file = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+
+      // Build a URL from the file
+      const fileURL = URL.createObjectURL(file);
+
+      // Create a link element
+      const link = document.createElement("a");
+      link.href = fileURL;
+      link.download = `Toyota E Submission - Final - ${monthCode}_${yearCode}.xlsx`; // The file name
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      console.log("File Downloaded Successfully");
     } catch (error) {
       console.error("There was an error uploading the data:", error);
     }
@@ -72,15 +88,15 @@ function ToyotaMedia() {
           }}
           name="MC"
         >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
+          <option value="01">1</option>
+          <option value="02">2</option>
+          <option value="03">3</option>
+          <option value="04">4</option>
+          <option value="05">5</option>
+          <option value="06">6</option>
+          <option value="07">7</option>
+          <option value="08">8</option>
+          <option value="09">9</option>
           <option value="10">10</option>
           <option value="11">11</option>
           <option value="12">12</option>

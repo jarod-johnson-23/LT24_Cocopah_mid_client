@@ -2,6 +2,9 @@
   height: 73px;
   width: 100%;
   background-color: #141a2d;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .logo {
@@ -9,4 +12,23 @@
   width: 44px;
   margin-left: 30px;
   margin-top: 15px;
+}
+
+.logout-btn {
+  width: 100px;
+  height: 35px;
+  background-color: #141a2d;
+  color: #fff;
+  border: 1.5px solid #fff;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: 0.2s;
+  margin: 19px;
+}
+
+.logout-btn:hover {
+  background-color: #fff;
+  color: #141a2d;
+  border-color: #141a2d;
+  cursor: pointer;
 }
