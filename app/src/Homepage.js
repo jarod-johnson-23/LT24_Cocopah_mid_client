@@ -3,10 +3,11 @@ import Navbar from "./components/Navbar";
 import zip_heatmap_img from "./components/images/zipcode_heatmap_img.png";
 import toyota_img from "./components/images/toyota.jpeg";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function Homepage() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     let access_json;

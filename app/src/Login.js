@@ -19,8 +19,7 @@ function Login() {
       });
       if (response.data.access_token) {
         localStorage.setItem("token", response.data.access_token);
-        localStorage.setItem("access", JSON.stringify(response.data.access));
-        console.log(response.data.access);
+
         navigate("/dashboard");
       } else {
         console.error("Login failed");

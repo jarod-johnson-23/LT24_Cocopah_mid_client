@@ -16,14 +16,13 @@ const PrivateRoute = ({ children }) => {
       }
 
       try {
-        const response = await fetch("/protected", {
+        const response = await fetch("http://localhost:5000/protected", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
           },
           credentials: "include", // if your API requires credentials
         });
-        console.log("checked token");
 
         if (response.ok) {
           setIsAuthenticated(true);
@@ -34,6 +33,7 @@ const PrivateRoute = ({ children }) => {
         }
       } catch (error) {
         console.error("Error validating token", error);
+        localStorage.removeItem("token");
         setIsAuthenticated(false);
       } finally {
         setIsLoading(false);
@@ -51,7 +51,7 @@ const PrivateRoute = ({ children }) => {
     ); // Or some other loading indicator
   }
 
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  return isAuthenticated ? children : <Navigate to="/" />;
 };
 
 export default PrivateRoute;

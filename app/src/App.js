@@ -13,15 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/create-account/:token" element={<CreateAccount />} />
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Homepage />
-            </PrivateRoute>
-          }
-          exact
-        />
+        <Route path="/dashboard" element={<Homepage />} exact />
         <Route
           path="/zipcode_heatmap"
           element={
