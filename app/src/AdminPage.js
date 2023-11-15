@@ -1,7 +1,12 @@
 import "./AdminPage.css";
+import Navbar from "./components/Navbar";
 
 function AdminPage() {
-  return <h1>Admin Page</h1>;
+  return (
+    <div className="admin-content">
+      <Navbar />
+    </div>
+  );
 }
 
 export default AdminPage;

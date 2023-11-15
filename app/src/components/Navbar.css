@@ -12,6 +12,12 @@
   width: 44px;
   margin-left: 30px;
   margin-top: 15px;
+  transition: 0.3s;
+}
+
+.logo:hover {
+  cursor: pointer;
+  scale: 1.15;
 }
 
 .logout-btn {

@@ -4,6 +4,7 @@ import PrivateRoute from "./PrivateRoute";
 import Heatmap from "./Heatmap";
 import Homepage from "./Homepage";
 import ToyotaMedia from "./ToyotaMedia";
+import AdminTools from "./AdminPage";
 import Login from "./Login";
 import CreateAccount from "./CreateAccount";
 
@@ -33,14 +34,15 @@ function App() {
           exact
         />
         <Route
-          path="*"
+          path="/admin_tools"
           element={
             <PrivateRoute>
-              <Login />
+              <AdminTools />
             </PrivateRoute>
           }
           exact
         />
+        <Route path="*" element={<Login />} exact />
       </Routes>
     </BrowserRouter>
   );

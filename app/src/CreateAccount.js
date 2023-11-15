@@ -7,8 +7,12 @@ import "./CreateAccount.css";
 
 const CreateAccount = () => {
   const [isValidToken, setIsValidToken] = useState(false);
+  const [showPasswordError, setShowPasswordError] = useState(false); // New state to track password error
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [role, setRole] = useState("");
   const { token } = useParams();
   const navigate = useNavigate();
 
@@ -50,13 +54,20 @@ const CreateAccount = () => {
     );
   }
 
-  // Render the account creation form with the verified email address
   const handleCreate = async (e) => {
     e.preventDefault();
+    // If password is not provided, set the error state to true and prevent form submission
+    if (!password) {
+      setShowPasswordError(true);
+      return;
+    }
     try {
       const response = await axios.post("http://localhost:5000/user/register", {
         email,
         password,
+        firstName, // Add the first name to the request
+        lastName, // Add the last name to the request
+        role, // Add the role to the request
       });
       if (response.ok) {
         localStorage.setItem("token", response.data.token);
@@ -77,7 +88,7 @@ const CreateAccount = () => {
     <div>
       <Navbar />
       <form onSubmit={handleCreate} className="login-form">
-        <img src={LTlogo} className="logo-img" />
+        <img src={LTlogo} className="logo-img" alt="LT Logo" />
         <div className="input-class">
           <label>Email: </label>
           <input type="text" id="disabled-input" value={email} disabled />
@@ -90,6 +101,37 @@ const CreateAccount = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+
+        {/* Add inputs for first name, last name, and role */}
+        <div className="input-class">
+          <label>First Name: </label>
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+        <div className="input-class">
+          <label>Last Name: </label>
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+        <div className="input-class">
+          <label>Role: </label>
+          <input
+            type="text"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          />
+        </div>
+        {showPasswordError && (
+          <div className="alert-error">
+            A password is required to create an account.
+          </div>
+        )}
         <button type="submit" className="login-btn">
           Create Account
         </button>
