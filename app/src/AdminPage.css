@@ -1,0 +1,105 @@
+.create-btn {
+  width: 220px;
+  height: 50px;
+  background-color: #1897d3;
+  border: 1.5px solid #1897d3;
+  font-weight: 600;
+  color: #fff;
+  font-size: 18px;
+  transition: 0.15s;
+  border-radius: 4px;
+  margin: 5px 25px 25px 0px;
+}
+
+.create-btn:hover {
+  cursor: pointer;
+  background-color: #fff;
+  color: #1897d3;
+}
+
+.vert-line {
+  width: 1px;
+  margin: 25px 30px 0 0;
+  min-height: max-content;
+  border-left: 3px solid #1897d3;
+}
+
+.admin-content {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  align-items: top;
+}
+
+.admin-account-section {
+  width: 70%;
+}
+
+.admin-create-account-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+.text-input-class {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  width: 220px;
+  gap: 5px;
+  margin-top: 10px;
+  color: #555555;
+}
+
+.text-input-class input {
+  border: 1.5px solid #1897d3;
+  border-radius: 4px;
+  height: 25px;
+  margin-bottom: 15px;
+  color: #555555;
+  font-size: 16px;
+  padding-left: 5px;
+}
+
+/* Hide the default checkbox */
+.checkbox-group input[type="checkbox"] {
+  display: none;
+}
+
+/* Create a custom box that will be the checkbox */
+.checkbox-group .custom-checkbox {
+  display: inline-block;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  background: #fafafa;
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Style for when the custom checkbox is checked */
+.checkbox-group input[type="checkbox"]:checked + .custom-checkbox {
+  background: #1897d3;
+  border-color: #1897d3;
+}
+
+/* Checkmark (hidden when not checked) */
+.checkbox-group .custom-checkbox::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+
+/* Show checkmark when checked */
+.checkbox-group input[type="checkbox"]:checked + .custom-checkbox::after {
+  opacity: 1;
+}
