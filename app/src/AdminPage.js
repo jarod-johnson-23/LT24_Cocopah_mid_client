@@ -1,11 +1,13 @@
 import "./AdminPage.css";
 import Navbar from "./components/Navbar";
-import { useState } from "react";
+import UserCard from "./components/UserCard";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 function AdminPage() {
   const [accessRights, setAccessRights] = useState({});
   const [email, setEmail] = useState(""); // New state for the email
+  const [users, setUsers] = useState([]);
 
   // Values for checkboxes
   const checkboxes = [
@@ -55,6 +57,21 @@ function AdminPage() {
         alert(
           "Account creation initiated. A setup email has been sent to the user."
         );
+
+        // Construct the new user object manually if necessary
+        const newUser = await {
+          ...response.data,
+          email: email, // Ensure email is included
+          // Set default or initial values for the new user
+          setupComplete: false, // Assuming new users have not completed setup
+          access: {
+            admin: accessRights.admin || false, // Example of setting access rights
+            // other possible rights based on your application's requirements
+          },
+        };
+
+        // Update the users state with the new user
+        setUsers((prevUsers) => [...prevUsers, newUser]);
       } else {
         // Handle other successful responses, if any (e.g., 200 OK)
       }
@@ -71,12 +88,41 @@ function AdminPage() {
     }
   };
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/users");
+        setUsers(response.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        // Add error handling here (e.g., display a message to the user)
+      }
+    };
+
+    fetchUsers();
+
+    const handleUserDeleted = (event) => {
+      setUsers((prevUsers) => prevUsers.filter((u) => u._id !== event.detail));
+    };
+
+    // Listen for the userDeleted event
+    window.addEventListener("userDeleted", handleUserDeleted);
+
+    return () => {
+      // Cleanup listener after the component unmounts
+      window.removeEventListener("userDeleted", handleUserDeleted);
+    };
+  }, []); // The empty array ensures this effect only runs once when the component mounts
+
   return (
     <div className="admin-page">
       <Navbar />
       <div className="admin-content">
         <div className="admin-account-section">
-          <h1>Account Section</h1>
+          {users.map((user) => (
+            // Map over the accounts to render UserCard components
+            <UserCard key={user._id} user={user} />
+          ))}
         </div>
         <div className="vert-line"></div>
         <div className="admin-create-account-section">

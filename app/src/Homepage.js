@@ -30,9 +30,9 @@ function Homepage() {
     if (response.ok) {
       const data = await response.json();
       let access = data.access;
-      setAdmin(access.admin_access || false);
+      setAdmin(access.admin || false);
       setHeatmap(access.heatmap || false);
-      setToyota(access.toyota_media || false);
+      setToyota(access.toyota || false);
     }
   };
 
