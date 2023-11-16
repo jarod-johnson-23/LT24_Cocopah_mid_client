@@ -1,10 +1,12 @@
 import "./Heatmap.css";
-import { useDropzone } from "react-dropzone";
 import InputSection from "./components/InputSection";
 import { useState, useEffect } from "react";
+import LTlogo from "./components/images/LT_logo.png";
+import { useNavigate } from "react-router-dom";
 
 function Heatmap() {
   const [apiData, setApiData] = useState("");
+  const navigate = useNavigate();
 
   const handleApiData = (data) => {
     setApiData(data);
@@ -25,6 +27,15 @@ function Heatmap() {
   return (
     <div style={{ position: "relative" }}>
       <InputSection onApiDataReceived={handleApiData} className="side-menu" />
+      <div className="lt-logo-heatmap">
+        <img
+          src={LTlogo}
+          alt="logo"
+          onClick={(e) => {
+            navigate("/dashboard");
+          }}
+        />
+      </div>
 
       <iframe
         src="https://py.laneterraleverapi.org/heatmap/result/default.html"

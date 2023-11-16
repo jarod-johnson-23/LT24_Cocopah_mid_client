@@ -17,3 +17,19 @@
 .side-menu {
   z-index: 999;
 }
+
+.lt-logo-heatmap {
+  position: absolute;
+  top: 15px;
+  left: 60px;
+  transition: 0.3s;
+}
+
+.lt-logo-heatmap img {
+  width: 60px;
+}
+
+.lt-logo-heatmap:hover {
+  scale: 1.1;
+  cursor: pointer;
+}
