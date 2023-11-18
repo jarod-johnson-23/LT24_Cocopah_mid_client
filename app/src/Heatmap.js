@@ -3,10 +3,12 @@ import InputSection from "./components/InputSection";
 import { useState, useEffect } from "react";
 import LTlogo from "./components/images/LT_logo.png";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "./config";
 
 function Heatmap() {
   const [apiData, setApiData] = useState("");
   const navigate = useNavigate();
+  const default_url = `${API_BASE_URL}/heatmap/result/default.html`;
 
   const handleApiData = (data) => {
     setApiData(data);
@@ -37,11 +39,7 @@ function Heatmap() {
         />
       </div>
 
-      <iframe
-        src="https://py.laneterraleverapi.org/heatmap/result/default.html"
-        id="heatmap-iframe"
-        width="100%"
-      ></iframe>
+      <iframe src={default_url} id="heatmap-iframe" width="100%"></iframe>
       <iframe src="" id="current-heatmap" width="100%"></iframe>
     </div>
   );

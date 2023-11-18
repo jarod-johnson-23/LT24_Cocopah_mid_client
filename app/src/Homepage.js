@@ -5,6 +5,7 @@ import toyota_img from "./components/images/toyota.jpeg";
 import admin_img from "./components/images/admin.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { API_BASE_URL } from "./config";
 
 function Homepage() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function Homepage() {
     const body = {
       email: email,
     };
-    const response = await fetch("http://localhost:5000/get_access", {
+    const response = await fetch(`${API_BASE_URL}/get_access`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +46,7 @@ function Homepage() {
       }
 
       try {
-        const response = await fetch("http://localhost:5000/protected", {
+        const response = await fetch(`${API_BASE_URL}/protected`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import UserCard from "./components/UserCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "./config";
 
 function AdminPage() {
   const [accessRights, setAccessRights] = useState({});
@@ -49,7 +50,7 @@ function AdminPage() {
     try {
       // Send a POST request to the /admin/create-user route
       const response = await axios.post(
-        "http://localhost:5000/admin/create-user",
+        `${API_BASE_URL}/admin/create-user`,
         data
       );
 
@@ -91,7 +92,7 @@ function AdminPage() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/users");
+        const response = await axios.get(`${API_BASE_URL}/users`);
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);

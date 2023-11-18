@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import LTlogo from "./components/images/LT_logo.png";
 import "./CreateAccount.css";
+import { API_BASE_URL } from "./config";
 
 const CreateAccount = () => {
   const [isValidToken, setIsValidToken] = useState(false);
@@ -20,7 +21,7 @@ const CreateAccount = () => {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/verify-token/${token}`
+          `${API_BASE_URL}/verify-token/${token}`
         );
         setIsValidToken(true);
         setEmail(response.data.email);
@@ -62,14 +63,15 @@ const CreateAccount = () => {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:5000/user/register", {
+      const response = await axios.post(`${API_BASE_URL}/user/register`, {
         email,
         password,
         firstName, // Add the first name to the request
         lastName, // Add the last name to the request
         role, // Add the role to the request
       });
-      if (response.ok) {
+
+      if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         navigate("/dashboard");
       } else if (response.status === 409) {
@@ -77,6 +79,7 @@ const CreateAccount = () => {
       } else if (response.status === 400) {
         console.error("ERROR");
       } else {
+        console.log(response.status);
         console.error("Generic Error MSG");
       }
     } catch (error) {

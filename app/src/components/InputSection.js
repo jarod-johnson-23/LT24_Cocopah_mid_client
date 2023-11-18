@@ -8,6 +8,7 @@ import {
   Droppable,
   Draggable as RBDraggable,
 } from "react-beautiful-dnd";
+import { API_BASE_URL } from "./../config";
 
 function InputSection({ onApiDataReceived }) {
   const [extractedColumns, setExtractedColumns] = useState([]);
@@ -156,7 +157,7 @@ function InputSection({ onApiDataReceived }) {
 
     try {
       const response = await axios.post(
-        "https://py.laneterraleverapi.org/heatmap/zipcode",
+        `${API_BASE_URL}/heatmap/zipcode`,
         data
       );
       console.log("Data uploaded successfully:", response.data);

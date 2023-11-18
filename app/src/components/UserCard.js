@@ -2,6 +2,7 @@
 import "./UserCard.css";
 import { useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "./../config";
 
 function UserCard({ user }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -34,7 +35,7 @@ function UserCard({ user }) {
   const handleUpdateAccess = async () => {
     try {
       const response = await axios.patch(
-        `http://localhost:5000/users/${user._id}/update-access`,
+        `${API_BASE_URL}/users/${user._id}/update-access`,
         {
           access: localAccessRights,
         }
@@ -53,7 +54,7 @@ function UserCard({ user }) {
   const handleDeleteUser = async () => {
     if (window.confirm("Are you sure you want to delete this account?")) {
       try {
-        await axios.delete(`http://localhost:5000/users/${user._id}/delete`);
+        await axios.delete(`${API_BASE_URL}/users/${user._id}/delete`);
         // Trigger a custom event with the user ID to inform the parent component (AdminPage)
         window.dispatchEvent(
           new CustomEvent("userDeleted", { detail: user._id })
@@ -77,18 +78,18 @@ function UserCard({ user }) {
             xmlns="http://www.w3.org/2000/svg"
             fill="#141a2d"
             stroke="#141a2d"
-            stroke-width="0.00018"
+            strokeWidth="0.00018"
             transform="matrix(-1, 0, 0, 1, 0, 0)rotate(0)"
             className="icon-svg"
           >
-            <g id="SVGRepo_bgCarrier" stroke-width="0" />
+            <g id="SVGRepo_bgCarrier" strokeWidth="0" />
 
             <g
               id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               stroke="#CCCCCC"
-              stroke-width="0.036"
+              strokeWidth="0.036"
             />
 
             <g id="SVGRepo_iconCarrier">

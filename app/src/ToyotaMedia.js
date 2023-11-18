@@ -3,6 +3,7 @@ import FileDropComponent from "./components/FileDropComponent";
 import { useState } from "react";
 import Navbar from "./components/Navbar";
 import axios from "axios";
+import { API_BASE_URL } from "./config";
 
 function ToyotaMedia() {
   const [mediaBuyFile, setMediaBuyFile] = useState(null);
@@ -35,7 +36,7 @@ function ToyotaMedia() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/toyota_media_buy_processing",
+        `${API_BASE_URL}/toyota_media_buy_processing`,
         data,
         { responseType: "blob" }
       );

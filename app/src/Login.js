@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from "./components/Navbar";
 import LTlogo from "./components/images/LT_logo.png";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "./config";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -31,7 +32,7 @@ function Login() {
 
     // Rest of submit logic
     try {
-      const response = await axios.post("http://localhost:5000/user/login", {
+      const response = await axios.post(`${API_BASE_URL}/user/login`, {
         email,
         password,
       });
@@ -68,7 +69,7 @@ function Login() {
       }
 
       try {
-        const response = await fetch("http://localhost:5000/protected", {
+        const response = await fetch(`${API_BASE_URL}/protected`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

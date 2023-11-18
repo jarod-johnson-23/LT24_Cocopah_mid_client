@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import { API_BASE_URL } from "./config";
 
 const PrivateRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -16,7 +17,7 @@ const PrivateRoute = ({ children }) => {
       }
 
       try {
-        const response = await fetch("http://localhost:5000/protected", {
+        const response = await fetch(`${API_BASE_URL}/protected`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
