@@ -453,7 +453,9 @@ function InputSection({ onApiDataReceived }) {
               </svg>
             </div>
             <div className="download-section">
-              <a onClick={handleDownload}>Download File</a>
+              <a onClick={handleDownload} style={{ cursor: "pointer" }}>
+                Download File
+              </a>
             </div>
           </div>
         </div>

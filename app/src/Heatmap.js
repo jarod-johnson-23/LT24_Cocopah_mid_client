@@ -29,14 +29,13 @@ function Heatmap() {
   return (
     <div style={{ position: "relative" }}>
       <InputSection onApiDataReceived={handleApiData} className="side-menu" />
-      <div className="lt-logo-heatmap">
+      <div className="lt-logo-heatmap" style={{ zIndex: 1 }}>
         <img
           src={LTlogo}
           alt="logo"
           onClick={(e) => {
             navigate("/dashboard");
           }}
-          style={{ "z-index": "999" }}
         />
       </div>
 
