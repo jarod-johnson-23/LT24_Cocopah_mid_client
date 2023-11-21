@@ -36,6 +36,7 @@ function Heatmap() {
           onClick={(e) => {
             navigate("/dashboard");
           }}
+          style={{ "z-index": "999" }}
         />
       </div>
 
