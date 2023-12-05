@@ -14,6 +14,12 @@ function Heatmap() {
     setApiData(data);
   };
 
+  const apiDataChange = () => {
+    const currentHeatmapIframe = document.getElementById("current-heatmap");
+    currentHeatmapIframe.zIndex = -2;
+    currentHeatmapIframe.src = "";
+  };
+
   useEffect(() => {
     const currentHeatmapIframe = document.getElementById("current-heatmap");
 
@@ -28,7 +34,11 @@ function Heatmap() {
 
   return (
     <div style={{ position: "relative" }}>
-      <InputSection onApiDataReceived={handleApiData} className="side-menu" />
+      <InputSection
+        onApiDataReceived={handleApiData}
+        onApiDataChange={apiDataChange}
+        className="side-menu"
+      />
       <div className="lt-logo-heatmap" style={{ zIndex: 1 }}>
         <img
           src={LTlogo}

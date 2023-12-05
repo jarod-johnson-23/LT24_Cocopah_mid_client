@@ -30,6 +30,8 @@ function UserCard({ user }) {
     { label: "Zipcode Heatmap", value: "heatmap" },
     { label: "Toyota Media Buy", value: "toyota" },
     { label: "Admin Tool Access", value: "admin" },
+    { label: "Beau Joke", value: "beau" },
+    { label: "Check-in Question Generator", value: "wsQuestion" },
   ];
 
   const handleUpdateAccess = async () => {

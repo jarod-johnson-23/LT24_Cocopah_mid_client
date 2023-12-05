@@ -9,8 +9,10 @@ import {
   Draggable as RBDraggable,
 } from "react-beautiful-dnd";
 import { API_BASE_URL } from "./../config";
+import earthSvg from "./images/googleEarth.svg";
+import infoSvg from "./images/info.svg";
 
-function InputSection({ onApiDataReceived }) {
+function InputSection({ onApiDataReceived, onApiDataChange }) {
   const [extractedColumns, setExtractedColumns] = useState([]);
   const [columnData, setColumnData] = useState([]);
   const [zipcodeItem, setZipcodeItem] = useState([]);
@@ -25,6 +27,8 @@ function InputSection({ onApiDataReceived }) {
   const [prefix, setPrefix] = useState("");
   const [downloadUrl, setDownloadUrl] = useState(null);
   const [heatmapUrl, setHeatmapUrl] = useState("");
+  const [kmlUrl, setKmlUrl] = useState("");
+  const [copySuccess, setCopySuccess] = useState("");
 
   const toggleMenu = (e) => {
     // Check if the click event originated from inside the side menu content
@@ -141,8 +145,32 @@ function InputSection({ onApiDataReceived }) {
     }
   };
 
+  const handleKmlDownload = async () => {
+    console.log(kmlUrl);
+    try {
+      const response = await fetch(kmlUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      setDownloadUrl(url);
+
+      // Programmatically trigger download
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = prefix + "_heatmap.kml";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error("Failed to download file:", error);
+    }
+  };
+
   const handleSubmit = async () => {
     setIsLoading(true);
+    onApiDataChange();
 
     const initialPosStr = secDataItem.map((item) => item.initialPos).join(",");
     console.log(initialPosStr);
@@ -164,6 +192,7 @@ function InputSection({ onApiDataReceived }) {
       if (response.data.status === "success") {
         onApiDataReceived(response.data.heatmap_url);
         setHeatmapUrl(response.data.heatmap_url);
+        setKmlUrl(response.data.kml_url);
       }
     } catch (error) {
       console.error("There was an error uploading the data:", error);
@@ -176,7 +205,13 @@ function InputSection({ onApiDataReceived }) {
   const copyToClipboard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
-    } catch (err) {}
+      setCopySuccess("Copied!"); // Set a success message
+      // Optionally set a timeout to clear the message after a few seconds
+      setTimeout(() => setCopySuccess(""), 2000);
+    } catch (err) {
+      setCopySuccess("Failed to copy"); // Set a failure message
+      setTimeout(() => setCopySuccess(""), 2000);
+    }
   };
 
   useEffect(() => {
@@ -262,7 +297,17 @@ function InputSection({ onApiDataReceived }) {
             </Droppable>
             <div className="input-cols">
               <div className="zipcode-col">
-                <h4>Zipcode Column</h4>
+                <div className="column-title-div">
+                  <h4>Zipcode Column</h4>
+                  <img
+                    src={infoSvg}
+                    onClick={() => {
+                      alert(
+                        "Place the column that contains the zipcode values here. Only one column will be accepted."
+                      );
+                    }}
+                  />
+                </div>
                 <Droppable droppableId="zipcodeList">
                   {(provided) => (
                     <ul
@@ -307,7 +352,17 @@ function InputSection({ onApiDataReceived }) {
                 </Droppable>
               </div>
               <div className="main-data-col">
-                <h4>Main Data Column</h4>
+                <div className="column-title-div">
+                  <h4>Main Data Column</h4>
+                  <img
+                    src={infoSvg}
+                    onClick={() => {
+                      alert(
+                        "Place the column that contains the data you want the zipcode coloring based off of. Only one value will be accepted."
+                      );
+                    }}
+                  />
+                </div>
                 <Droppable droppableId="mainDataList">
                   {(provided) => (
                     <ul
@@ -352,7 +407,17 @@ function InputSection({ onApiDataReceived }) {
                 </Droppable>
               </div>
               <div className="sec-data-col">
-                <h4>Secondary Data Columns</h4>
+                <div className="column-title-div">
+                  <h4>Secondary Data Column</h4>
+                  <img
+                    src={infoSvg}
+                    onClick={() => {
+                      alert(
+                        "Place columns here where you would like the data to be associated with the zipcode. Multiple values are accepted. These columns will not affect the coloring of zipcodes."
+                      );
+                    }}
+                  />
+                </div>
                 <Droppable droppableId="secDataList">
                   {(provided) => (
                     <ul
@@ -403,7 +468,18 @@ function InputSection({ onApiDataReceived }) {
           className="final-section"
           style={{ display: buttonVis ? "flex" : "none" }}
         >
-          <h4 className="input-label">File Prefix</h4>
+          <div className="column-title-div">
+            <h4 className="input-label">File Prefix</h4>
+            <img
+              src={infoSvg}
+              onClick={() => {
+                alert(
+                  "Optional value. This will append the prefix to the file name for organizational purposes on your end."
+                );
+              }}
+            />
+          </div>
+          {/* <h4 className="input-label">File Prefix</h4> */}
           <input
             type="text"
             value={prefix}
@@ -451,11 +527,31 @@ function InputSection({ onApiDataReceived }) {
                   </g>
                 </g>
               </svg>
+              {copySuccess && <p className="copy-feedback">{copySuccess}</p>}
             </div>
             <div className="download-section">
-              <a onClick={handleDownload} style={{ cursor: "pointer" }}>
-                Download File
+              <a
+                onClick={handleDownload}
+                href="javascript:void(0)"
+                style={{ cursor: "pointer" }}
+              >
+                Download HTML File
               </a>
+            </div>
+            <div className="download-section" style={{ cursor: "pointer" }}>
+              <a onClick={handleKmlDownload} href="javascript:void(0)">
+                Download KML File
+              </a>
+              <img src={earthSvg} onClick={handleKmlDownload} alt="info icon" />
+              <img
+                src={infoSvg}
+                onClick={() => {
+                  alert(
+                    "KML files can only be viewed through Google Maps. Visit https://www.google.com/maps/d/u/0/ to create a new map and import the KML file."
+                  );
+                }}
+                alt="info icon"
+              />
             </div>
           </div>
         </div>

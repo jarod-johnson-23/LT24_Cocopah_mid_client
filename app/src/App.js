@@ -7,6 +7,7 @@ import ToyotaMedia from "./ToyotaMedia";
 import AdminTools from "./AdminPage";
 import Login from "./Login";
 import CreateAccount from "./CreateAccount";
+import BeauJoke from "./BeauJoke";
 
 function App() {
   return (
@@ -38,6 +39,15 @@ function App() {
           element={
             <PrivateRoute>
               <AdminTools />
+            </PrivateRoute>
+          }
+          exact
+        />
+        <Route
+          path="/beau_joke"
+          element={
+            <PrivateRoute>
+              <BeauJoke />
             </PrivateRoute>
           }
           exact

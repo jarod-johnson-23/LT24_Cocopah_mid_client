@@ -121,6 +121,17 @@
   margin-top: 5px;
 }
 
+.user-card-expanded-content > .checkbox-group {
+  display: grid;
+  grid-template-rows: repeat(
+    3,
+    auto
+  ); /* Three rows to accommodate the checkboxes */
+  grid-auto-flow: column; /* Directs the grid to fill columns from top to bottom */
+  gap: 0px 15px;
+  max-height: fit-content; /* Ensures the grid container does not grow beyond its contents */
+}
+
 /* Hide the default checkbox */
 .checkbox-group input[type="checkbox"] {
   display: none;
