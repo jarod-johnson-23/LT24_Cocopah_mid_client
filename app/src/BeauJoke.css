@@ -41,3 +41,22 @@
   font-size: 16px;
   padding-left: 5px;
 }
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #1897d3;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto; /* Center the spinner and give it some vertical space */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
