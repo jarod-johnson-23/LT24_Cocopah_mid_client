@@ -1,5 +1,5 @@
 import "./Navbar.css";
-import logo from "./images/LT_logo.png";
+import logo from "./images/LT_logo.svg";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 

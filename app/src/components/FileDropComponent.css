@@ -1,15 +1,16 @@
 #file-area {
-  border: 3px dashed #c3c3c3;
+  border: 2px dashed rgba(255, 255, 255, 0.5);
   width: 198px;
   height: calc(100% - 56px);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 14px;
+  border-radius: 10px;
   /* margin-top: 15px; */
   margin-right: 0px;
   padding: 10px;
   transition: 0.3s;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 #file-area:hover {

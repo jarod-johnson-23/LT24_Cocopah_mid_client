@@ -1,7 +1,7 @@
 import "./Heatmap.css";
 import InputSection from "./components/InputSection";
 import { useState, useEffect } from "react";
-import LTlogo from "./components/images/LT_logo.png";
+import LTlogo from "./components/images/LT_logo.svg";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "./config";
 
@@ -23,7 +23,7 @@ function Heatmap() {
   useEffect(() => {
     const currentHeatmapIframe = document.getElementById("current-heatmap");
 
-    if (apiData != null && apiData != "") {
+    if (apiData !== null && apiData !== "") {
       currentHeatmapIframe.style.zIndex = 0;
       currentHeatmapIframe.src = apiData;
     } else {

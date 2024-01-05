@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import LTlogo from "./components/images/LT_logo.png";
+import LTlogo from "./components/images/LT_logo.svg";
 import "./CreateAccount.css";
 import { API_BASE_URL } from "./config";
 

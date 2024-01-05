@@ -4,6 +4,7 @@ import zip_heatmap_img from "./components/images/zipcode_heatmap_img.png";
 import toyota_img from "./components/images/toyota.jpeg";
 import admin_img from "./components/images/admin.png";
 import beau_img from "./components/images/beau.png";
+import lt_redirect_img from "./components/images/lt_redirect.jpg";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "./config";
@@ -15,7 +16,7 @@ function Homepage() {
   const [toyota, setToyota] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [beau, setBeau] = useState(false);
-  const [wsQuestion, setWsQuestion] = useState(false);
+  const [lt_redirect, set_lt_redirect] = useState(false);
 
   const getAccess = async (email) => {
     console.log(email);
@@ -38,7 +39,7 @@ function Homepage() {
       setHeatmap(access.heatmap || false);
       setToyota(access.toyota || false);
       setBeau(access.beau || false);
-      setWsQuestion(access.wsQuestion || false);
+      set_lt_redirect(access.lt_redirect || false);
     }
   };
 
@@ -142,18 +143,18 @@ function Homepage() {
             </div>
           </div>
         )}
-        {wsQuestion && (
+        {lt_redirect && (
           <div
             className="card"
             onClick={(e) => {
-              navigate("/ws_question");
+              navigate("/lt_redirect");
             }}
           >
             <div className="img-div">
-              {/* <img src={admin_img} alt="admin service" /> */}
+              <img src={lt_redirect_img} alt="url redirect service" />
             </div>
             <div className="card-info">
-              <h4>Check-in Question Generator</h4>
+              <h4>LT URL Redirect</h4>
             </div>
           </div>
         )}

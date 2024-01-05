@@ -1,0 +1,152 @@
+.redirect-form-container {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 25px;
+}
+
+.static-text {
+  margin-top: 8px;
+  font-size: 24px;
+}
+
+.small-text-box {
+  text-align: right;
+  width: 180px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#wide-input {
+  width: 300px;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.wide-text-box {
+  width: 300px;
+}
+
+.redirect-btn {
+  width: 300px;
+  height: 55px;
+  background-color: #1897d3;
+  border: 1.5px solid #1897d3;
+  font-weight: 600;
+  color: #fff;
+  font-size: 18px;
+  transition: 0.15s;
+  border-radius: 4px;
+  margin: 5px 25px 25px 0px;
+}
+
+.redirect-btn:hover {
+  cursor: pointer;
+  background-color: #fff;
+  color: #1897d3;
+}
+
+.redirect-input-class {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  width: 300px;
+  gap: 5px;
+  color: #555555;
+}
+
+.redirect-input-class input {
+  border: 1.5px solid #1897d3;
+  border-radius: 4px;
+  height: 35px;
+  margin-bottom: 15px;
+  color: #555555;
+  padding-left: 5px;
+  font-size: 24px;
+}
+
+input.lowercase {
+  text-transform: lowercase;
+}
+
+.redirect-form {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.toggle-container {
+  width: 100%;
+  height: 50px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+
+.slider {
+  width: 50%;
+  height: 100%;
+  background-color: #1897d3;
+  border-radius: 5px;
+  position: absolute;
+  top: 0;
+  transition: left 0.3s; /* Smoothly transition the left property */
+  z-index: 1; /* Keep the slider behind the text */
+}
+
+.slider.left {
+  left: 0;
+}
+
+.slider.right {
+  left: 50%; /* Move the slider to cover the right half */
+}
+
+.toggle-text {
+  z-index: 2; /* Ensure the text is on top of the slider */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  font-size: 20px;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.toggle-text.left-text {
+  opacity: 1; /* Fully visible if on the left side */
+  left: 0;
+}
+
+.toggle-text.right-text {
+  opacity: 1; /* Slightly transparent if on the right side */
+  right: 0;
+}
+
+.toggle-container:hover .toggle-text {
+  /* Slightly increase the opacity on hover for better user experience */
+  opacity: 0.85;
+}
+
+.faded {
+  opacity: 0.5;
+  color: #555; /* This class will make the text more transparent */
+}

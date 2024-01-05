@@ -31,7 +31,7 @@ function UserCard({ user }) {
     { label: "Toyota Media Buy", value: "toyota" },
     { label: "Admin Tool Access", value: "admin" },
     { label: "Beau Joke", value: "beau" },
-    { label: "Check-in Question Generator", value: "wsQuestion" },
+    { label: "LT URL Redirect", value: "lt_redirect" },
   ];
 
   const handleUpdateAccess = async () => {

@@ -8,6 +8,7 @@ import AdminTools from "./AdminPage";
 import Login from "./Login";
 import CreateAccount from "./CreateAccount";
 import BeauJoke from "./BeauJoke";
+import LTRedirect from "./LTRedirect";
 
 function App() {
   return (
@@ -48,6 +49,15 @@ function App() {
           element={
             <PrivateRoute>
               <BeauJoke />
+            </PrivateRoute>
+          }
+          exact
+        />
+        <Route
+          path="/lt_redirect"
+          element={
+            <PrivateRoute>
+              <LTRedirect />
             </PrivateRoute>
           }
           exact

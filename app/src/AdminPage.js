@@ -16,7 +16,7 @@ function AdminPage() {
     { label: "Toyota Media Buy", value: "toyota" },
     { label: "Admin Tool Access", value: "admin" },
     { label: "Beau Joke", value: "beau" },
-    { label: "Check-in Question Generator", value: "wsQuestion" },
+    { label: "LT URL Redirect", value: "lt_redirect" },
   ];
 
   const handleCheckboxChange = (event) => {
@@ -69,7 +69,10 @@ function AdminPage() {
           setupComplete: false, // Assuming new users have not completed setup
           access: {
             admin: accessRights.admin || false, // Example of setting access rights
-            // other possible rights based on your application's requirements
+            heatmap: accessRights.heatmap || false,
+            toyota: accessRights.toyota || false,
+            beau: accessRights.beau || false,
+            lt_redirect: accessRights.lt_redirect || false,
           },
         };
 
