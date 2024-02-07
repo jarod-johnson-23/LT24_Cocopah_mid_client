@@ -152,8 +152,8 @@
 
 /* Style for when the custom checkbox is checked */
 .checkbox-group input[type="checkbox"]:checked + .custom-checkbox {
-  background: #1897d3;
-  border-color: #1897d3;
+  background: #3fbeea;
+  border-color: #3fbeea;
 }
 
 /* Checkmark (hidden when not checked) */
@@ -176,23 +176,21 @@
 }
 
 .update-btn {
-  width: 180px;
-  height: 35px;
-  background-color: #1897d3;
-  border: 1.5px solid #1897d3;
-  font-weight: 600;
-  color: #fff;
+  width: 240px;
+  height: 60px;
+  background-color: #3fbeea;
+  border: 1.5px solid #3fbeea;
+  color: #223651;
   font-size: 18px;
   transition: 0.15s;
   border-radius: 4px;
-  margin: 3px 25px 25px 0px;
-  padding: 5px 10px;
+  font-weight: 900;
 }
 
 .update-btn:hover {
   cursor: pointer;
-  background-color: #fff;
-  color: #1897d3;
+  background-color: #223651;
+  color: #3fbeea;
 }
 
 .delete-user-btn {

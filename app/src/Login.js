@@ -32,7 +32,7 @@ function Login() {
 
     // Rest of submit logic
     try {
-      const response = await axios.post(`${API_BASE_URL}/user/login`, {
+      const response = await axios.post(`${API_BASE_URL}/users/login`, {
         email,
         password,
       });
@@ -69,7 +69,7 @@ function Login() {
       }
 
       try {
-        const response = await fetch(`${API_BASE_URL}/protected`, {
+        const response = await fetch(`${API_BASE_URL}/users/protected`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

@@ -9,6 +9,8 @@ import Login from "./Login";
 import CreateAccount from "./CreateAccount";
 import BeauJoke from "./BeauJoke";
 import LTRedirect from "./LTRedirect";
+import BCMediaTool from "./BCMediaTool";
+import CocopahDB from "./CocopahDB";
 
 function App() {
   return (
@@ -36,6 +38,15 @@ function App() {
           exact
         />
         <Route
+          path="/bc-media-tool"
+          element={
+            <PrivateRoute>
+              <BCMediaTool />
+            </PrivateRoute>
+          }
+          exact
+        />
+        <Route
           path="/admin_tools"
           element={
             <PrivateRoute>
@@ -58,6 +69,15 @@ function App() {
           element={
             <PrivateRoute>
               <LTRedirect />
+            </PrivateRoute>
+          }
+          exact
+        />
+        <Route
+          path="/cocopah_database_management"
+          element={
+            <PrivateRoute>
+              <CocopahDB />
             </PrivateRoute>
           }
           exact

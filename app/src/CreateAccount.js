@@ -21,7 +21,7 @@ const CreateAccount = () => {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-          `${API_BASE_URL}/verify-token/${token}`
+          `${API_BASE_URL}/users/verify-token/${token}`
         );
         setIsValidToken(true);
         setEmail(response.data.email);
@@ -63,7 +63,7 @@ const CreateAccount = () => {
       return;
     }
     try {
-      const response = await axios.post(`${API_BASE_URL}/user/register`, {
+      const response = await axios.post(`${API_BASE_URL}/users/register`, {
         email,
         password,
         firstName, // Add the first name to the request

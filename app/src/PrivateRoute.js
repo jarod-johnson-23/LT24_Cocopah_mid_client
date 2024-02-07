@@ -17,7 +17,7 @@ const PrivateRoute = ({ children }) => {
       }
 
       try {
-        const response = await fetch(`${API_BASE_URL}/protected`, {
+        const response = await fetch(`${API_BASE_URL}/users/protected`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

@@ -5,6 +5,8 @@ import toyota_img from "./components/images/toyota.jpeg";
 import admin_img from "./components/images/admin.png";
 import beau_img from "./components/images/beau.png";
 import lt_redirect_img from "./components/images/lt_redirect.jpg";
+import basecamp_img from "./components/images/basecamp.jpg";
+import cocopah_img from "./components/images/cocopah_img.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "./config";
@@ -17,6 +19,8 @@ function Homepage() {
   const [admin, setAdmin] = useState(false);
   const [beau, setBeau] = useState(false);
   const [lt_redirect, set_lt_redirect] = useState(false);
+  const [bcMedia, setBcMedia] = useState(false);
+  const [cocopahDB, setCocopahDB] = useState(false);
 
   const getAccess = async (email) => {
     console.log(email);
@@ -24,7 +28,7 @@ function Homepage() {
     const body = {
       email: email,
     };
-    const response = await fetch(`${API_BASE_URL}/get_access`, {
+    const response = await fetch(`${API_BASE_URL}/users/get_access`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,6 +44,8 @@ function Homepage() {
       setToyota(access.toyota || false);
       setBeau(access.beau || false);
       set_lt_redirect(access.lt_redirect || false);
+      setBcMedia(access.bcMedia || false);
+      setCocopahDB(access.cocopah_db || false);
     }
   };
 
@@ -52,7 +58,7 @@ function Homepage() {
       }
 
       try {
-        const response = await fetch(`${API_BASE_URL}/protected`, {
+        const response = await fetch(`${API_BASE_URL}/users/protected`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -155,6 +161,36 @@ function Homepage() {
             </div>
             <div className="card-info">
               <h4>LT URL Redirect</h4>
+            </div>
+          </div>
+        )}
+        {bcMedia && (
+          <div
+            className="card"
+            onClick={(e) => {
+              navigate("/bc-media-tool");
+            }}
+          >
+            <div className="img-div">
+              <img src={basecamp_img} alt="url redirect service" />
+            </div>
+            <div className="card-info">
+              <h4>BaseCamp Media Tool</h4>
+            </div>
+          </div>
+        )}
+        {cocopahDB && (
+          <div
+            className="card"
+            onClick={(e) => {
+              navigate("/cocopah_database_management");
+            }}
+          >
+            <div className="img-div" id="cocopah_img">
+              <img src={cocopah_img} alt="cocopah DB service" />
+            </div>
+            <div className="card-info">
+              <h4>Cocopah Database Management Tool</h4>
             </div>
           </div>
         )}

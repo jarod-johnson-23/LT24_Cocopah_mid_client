@@ -4,7 +4,7 @@ import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
 import * as XLSX from "xlsx";
 
-function FileDropComponent({ onFileUpload }) {
+function FileDropComponent({ onFileUpload, dataEntered }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileName, setFileName] = useState("");
 
@@ -56,7 +56,11 @@ function FileDropComponent({ onFileUpload }) {
   });
 
   return (
-    <div {...getRootProps()} id="file-area">
+    <div
+      {...getRootProps()}
+      className="file-area"
+      id={`${dataEntered ? "file-uploaded" : ""}`}
+    >
       <input {...getInputProps()} />
       {fileName ? (
         <p>File Uploaded: {fileName}</p>

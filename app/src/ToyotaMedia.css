@@ -6,8 +6,19 @@
   align-items: center;
 }
 
+.toyota-bottom-content {
+  background-color: #223651ff;
+  border-radius: 8px;
+  padding: 25px;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .label-file-div {
   margin: 15px;
+  color: #fff;
 }
 
 .toyota-file-drop {
@@ -16,7 +27,7 @@
 
 .date-selectors {
   display: flex;
-  width: 15%;
+  width: 80%;
   height: 50px;
   flex-direction: row;
   justify-content: space-between;
@@ -24,21 +35,21 @@
 }
 
 .toyota-btn {
-  width: 220px;
-  height: 50px;
-  background-color: #1897d3;
-  border: 1.5px solid #1897d3;
-  font-weight: 600;
-  color: #fff;
+  width: 240px;
+  height: 54px;
+  background-color: #3fbeea;
+  border: 1.5px solid #3fbeea;
+  color: #223651;
   font-size: 18px;
   transition: 0.15s;
   border-radius: 4px;
+  font-weight: 900;
 }
 
 .toyota-btn:hover {
   cursor: pointer;
-  background-color: #fff;
-  color: #1897d3;
+  background-color: #223651;
+  color: #3fbeea;
 }
 
 .spacer {

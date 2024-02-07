@@ -36,7 +36,7 @@ function ToyotaMedia() {
 
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/toyota_media_buy_processing`,
+        `${API_BASE_URL}/toyota/media_buy_processing`,
         data,
         { responseType: "blob" }
       );
@@ -63,59 +63,61 @@ function ToyotaMedia() {
   return (
     <div className="toyota-main-content">
       <Navbar />
-      <div className="spacer"></div>
-      <div className="label-file-div">
-        <label className="file-label">Toyota Media Buy File</label>
-        <div className="toyota-file-drop">
-          <FileDropComponent
-            onFileUpload={onMediaBuyFileUpload}
-            className="file-area"
-          />
+      <div className="toyota-bottom-content">
+        {/* <div className="spacer"></div> */}
+        <div className="label-file-div">
+          <label className="file-label">Toyota Media Buy File</label>
+          <div className="toyota-file-drop">
+            <FileDropComponent
+              onFileUpload={onMediaBuyFileUpload}
+              className="file-area"
+            />
+          </div>
         </div>
-      </div>
-      <div className="label-file-div">
-        <label className="file-label">Co-op Model Rotation File</label>
-        <div className="toyota-file-drop">
-          <FileDropComponent
-            onFileUpload={onModelRotFileUpload}
-            className="file-area"
-          />
+        <div className="label-file-div">
+          <label className="file-label">Co-op Model Rotation File</label>
+          <div className="toyota-file-drop">
+            <FileDropComponent
+              onFileUpload={onModelRotFileUpload}
+              className="file-area"
+            />
+          </div>
         </div>
+        <div className="date-selectors">
+          <select
+            onChange={(e) => {
+              setMonthCode(e.target.value);
+            }}
+            name="MC"
+          >
+            <option value="01">1</option>
+            <option value="02">2</option>
+            <option value="03">3</option>
+            <option value="04">4</option>
+            <option value="05">5</option>
+            <option value="06">6</option>
+            <option value="07">7</option>
+            <option value="08">8</option>
+            <option value="09">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+          <select
+            onChange={(e) => {
+              setYearCode(e.target.value);
+            }}
+            name="YC"
+          >
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+          </select>
+        </div>
+        <button className="toyota-btn" onClick={submitData}>
+          Process Data
+        </button>
       </div>
-      <div className="date-selectors">
-        <select
-          onChange={(e) => {
-            setMonthCode(e.target.value);
-          }}
-          name="MC"
-        >
-          <option value="01">1</option>
-          <option value="02">2</option>
-          <option value="03">3</option>
-          <option value="04">4</option>
-          <option value="05">5</option>
-          <option value="06">6</option>
-          <option value="07">7</option>
-          <option value="08">8</option>
-          <option value="09">9</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-        </select>
-        <select
-          onChange={(e) => {
-            setYearCode(e.target.value);
-          }}
-          name="YC"
-        >
-          <option value="2023">2023</option>
-          <option value="2024">2024</option>
-          <option value="2025">2025</option>
-        </select>
-      </div>
-      <button className="toyota-btn" onClick={submitData}>
-        Process Data
-      </button>
     </div>
   );
 }

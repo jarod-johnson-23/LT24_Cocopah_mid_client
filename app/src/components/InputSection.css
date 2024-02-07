@@ -1,39 +1,3 @@
-.tab {
-  min-width: 30px;
-  height: 100%;
-  background-color: #1897d3;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  left: calc(100% - 30px);
-  cursor: pointer;
-}
-
-.minimized {
-  height: 0px;
-  border-radius: 14px;
-}
-
-.mini-btn {
-  color: #ffffff;
-  margin: 5px 0 0 5px;
-}
-
-.mini-btn:hover {
-  cursor: pointer;
-}
-
-#verticalLine {
-  transform: rotate(-90deg);
-  transform-origin: center;
-  transition: transform 0.3s ease;
-}
-
-#verticalLine.minus {
-  transform: rotate(-90deg);
-  transform: translateX(1px);
-}
-
 .auto-height {
   height: auto;
 }
@@ -49,78 +13,172 @@
   justify-content: center;
 }
 
+.zipcode-col ul {
+  min-height: 41px;
+}
+
+.main-data-col ul {
+  min-height: 41px;
+}
+
+.tab {
+  position: fixed;
+  bottom: 349px;
+  right: 250px;
+  background-color: #223651;
+  width: 80px;
+  height: 40px;
+  border-radius: 5px 5px 0 0;
+  transition: 0.4s ease-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tab.down {
+  bottom: 0px;
+}
+
+.tab img {
+  width: 25px;
+  transition: 0.8s;
+}
+
+.tab.down img {
+  transform: scaleY(-1);
+}
+
 .list {
   list-style: none;
   padding: 5px;
-  width: 200px;
+  width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   max-height: calc(100% - 40px);
   padding-right: 5px;
   /* margin-right: 25px; */
-  height: calc(100% - 40px);
 }
 
 .file-div {
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   justify-content: center;
+  margin-bottom: 35px;
+  /* padding-left: 107px;           */
 }
 
 .box {
-  width: 170px;
+  width: calc(100% - 6px);
   height: fit-content;
   /* margin-bottom: 5px; */
   background-color: #dfdfdf;
-  border: 1.5px solid #1897d3;
+  border: 3px solid #3fbeea;
   border-radius: 5px;
-  padding: 7px 7px 7px 1px;
+  /* padding: 7px 7px 7px 1px; */
   /* margin-right: 10px; */
-  color: #555;
+  color: #000;
 }
 
 .box:hover {
   cursor: pointer;
 }
 
+.inside-box-left {
+  background-color: #3fbeea;
+  padding-top: 2px;
+  height: 100%;
+}
+
 .side-menu {
   position: fixed;
-  top: calc(50vh - 200px);
+  bottom: 100%;
   left: 0;
-  height: 400px;
+  height: 350px;
   background-color: #223651;
   color: #fff;
-  transition: width 0.3s;
+  transition: 0.4s ease-out;
   overflow-x: hidden;
-  overflow-y: auto;
-  border-radius: 0 14px 14px 0;
-  width: fit-content;
-  border: 2px solid #1897d3;
+  overflow-y: visible;
+  width: 100%;
   border-left: none;
 }
 
 .side-menu.collapsed {
-  max-width: 30px;
+  bottom: -350px;
+}
+
+.data-header {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 
 .side-menu.expanded {
-  max-width: 1000px;
-  transition: max-width 0.3s ease;
-  width: fit-content;
+  bottom: 0;
+}
+
+.description-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+  font-size: 12px;
+  line-height: 18px;
+  height: 100%;
+  margin-left: 100px;
+}
+
+.file-uploaded-class {
+  color: #fff;
+}
+
+.beginning-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: 1s;
+  width: 100%;
+  height: 300px;
+}
+
+.vert-white-line {
+  height: 100%;
+  width: 0.0001px;
+  border: 1.4px solid #ffffff44;
+  border-radius: 25px;
+  margin: 10px 25px 10px 26px;
+}
+
+.mid-content {
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  justify-content: center;
+  height: 100%;
+}
+
+.invis {
+  display: none;
 }
 
 .side-menu-content {
-  padding: 15px;
-  opacity: 0;
+  position: relative;
+  opacity: 1;
   transition: opacity 0.3s;
   transition-delay: 0.1s;
-  margin-right: 35px;
+  /* margin-right: 35px; */
   display: flex;
   flex-direction: row;
-  gap: 25px;
-  height: calc(100% - 30px);
+  align-items: center;
+  /* gap: 25px; */
+  overflow-y: visible;
+  height: 100%;
 }
 
 .side-menu.expanded .side-menu-content {
@@ -129,30 +187,41 @@
 
 .input-cols {
   color: #555555;
-  margin: 0px 0px 5px 10px;
-  padding-right: 20px;
+  margin: 0px 0px 0px 0px;
+  width: 300px;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 360px;
+  /* max-height: 360px; */
 }
 
-.input-cols ul {
-  border: 2px dashed #c3c3c3;
+.input-cols-list {
+  border: 1.5px dashed rgba(255, 255, 255, 0.5);
   border-radius: 5px;
   min-width: 160px;
   min-height: 35px;
   height: fit-content;
-  width: fit-content;
+  width: calc(100% - 14px);
   overflow-y: hidden;
-  background-color: none;
-  transition: background-color 0.2s;
+  background-color: rgba(255, 255, 255, 0.04);
+  transition: background-color 0.1s;
   /* margin-bottom: -20px; */
+}
+
+#input-col-hover {
+  background-color: #3fbeea44;
+  border: 1.5px dashed #fff;
 }
 
 .column-title-div {
   display: flex;
   flex-direction: row;
   align-items: end;
+  color: #fff;
+}
+
+.column-section {
+  display: flex;
+  flex-direction: row;
 }
 
 .column-title-div img {
@@ -167,8 +236,53 @@ h4 {
   margin-top: 10px;
 }
 
+.list.main-list {
+  padding: 0 5px 0 0;
+  margin: 0px;
+}
+
 .main-list li {
   margin-bottom: 10px;
+  width: calc(100% - 6px);
+}
+
+.start-column {
+  width: 287px;
+}
+
+.start-column ul {
+  min-height: 250px;
+  overflow-y: auto;
+}
+
+/* For Chrome, Safari, and newer versions of Edge */
+.start-column ul::-webkit-scrollbar {
+  width: 4px; /* Width of the scrollbar */
+}
+
+.start-column ul::-webkit-scrollbar-track {
+  background: rgba(
+    255,
+    255,
+    255,
+    0.32
+  ); /* Track background. Not necessary unless you want a styled track */
+  margin: 0px; /* Vertical margin for the scrollbar */
+  border-radius: 50px;
+}
+
+.start-column ul::-webkit-scrollbar-thumb {
+  width: 4px;
+  background-color: #3fbeea; /* Color of the sliding scrollbar */
+  border-radius: 50px; /* Roundness of the scrollbar */
+  border-right: 4px solid transparent; /* Creates padding around the scroll thumb */
+}
+
+/* For Firefox */
+.start-column ul {
+  scrollbar-width: thin; /* 'auto' or 'thin' */
+  scrollbar-color: #3fbeea transparent; /* thumb and track color */
+  scrollbar-gutter: stable both-edges;
 }
 
 .zipcode-list {
@@ -189,30 +303,55 @@ h4 {
   flex-direction: row;
   justify-content: left;
   align-items: center;
+  /* height: 100%; */
+  margin: none;
+  padding: none;
+  background-color: #3fbeea;
 }
 
 .inside-box svg {
-  min-height: 20px;
-  min-width: 20px;
-  margin-right: 5px;
+  margin-right: 0px;
+}
+
+.inside-box span {
+  background-color: #fff;
+  width: 100%;
+  border-radius: 3px 3px 3px 3px;
+  padding: 8px;
 }
 
 .submit-btn {
-  width: 220px;
-  height: 50px;
-  background-color: #1897d3;
-  border: 1.5px solid #1897d3;
-  font-weight: 600;
-  color: #fff;
+  width: 240px;
+  height: 54px;
+  background-color: #3fbeea;
+  border: 1.5px solid #3fbeea;
+  color: #223651;
   font-size: 18px;
   transition: 0.15s;
   border-radius: 4px;
+  font-weight: 900;
 }
 
 .submit-btn:hover {
   cursor: pointer;
-  background-color: #fff;
-  color: #1897d3;
+  background-color: #223651;
+  color: #3fbeea;
+}
+
+.submit-btn.btn-load {
+  background-color: #223651;
+  color: #fff;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.submit-btn.btn-disabled {
+  opacity: 50%;
+  cursor: no-drop;
+}
+
+.file-div.shift-left {
+  padding: none;
 }
 
 .copy-btn {
@@ -239,6 +378,15 @@ h4 {
   color: #1897d3;
   width: 100%;
   margin-top: 15px;
+  margin-left: 5px;
+}
+
+.copy-link-section p {
+  margin-left: 8px;
+}
+
+.copy-link-section img {
+  width: 22px;
 }
 
 .copy-link-section:hover {
@@ -259,15 +407,13 @@ h4 {
   white-space: nowrap;
 }
 
-.input-label {
-  color: #555555;
-}
-
 .text-input {
   height: 25px;
   margin: 2px 0 15px 0;
   font-size: 16px;
-  border: 2px solid #1897d3;
+  border: 1px solid #ffffff88;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.04);
   border-radius: 4px;
   padding-left: 2px;
 }
@@ -281,10 +427,15 @@ h4 {
   margin: 10px 0 18px 0;
   display: flex;
   flex-direction: row;
+}
+
+.download-section a {
+  margin-left: 8px;
+  margin-right: 5px;
   text-decoration: underline;
 }
 
-.download-section:hover {
+.download-section a:hover {
   text-decoration: none;
 }
 
@@ -296,4 +447,89 @@ h4 {
 
 .download-section a {
   color: #1897d3;
+}
+
+.popup {
+  position: fixed;
+  top: 59%;
+  left: 90%;
+  transform: translateX(-50%) translateY(50px);
+  /* Additional styles for pop-up (background, border, etc.) */
+  background-color: #fff;
+  border-radius: 5px;
+  width: 190px;
+  height: fit-content;
+  padding: 10px;
+  font-size: 12px;
+  color: #000;
+  z-index: 999999;
+}
+
+.info-icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.info-icon-default,
+.info-icon-filled {
+  position: absolute;
+  top: -18px;
+  left: 6px;
+  width: 100%; /* Set a specific size if necessary */
+  height: auto; /* Keep the aspect ratio */
+  transition: opacity 0.2s ease;
+}
+
+.info-icon-filled {
+  opacity: 0;
+}
+
+.info-icon-container:hover .info-icon-filled {
+  opacity: 1;
+}
+
+.info-icon-container:hover .info-icon-default {
+  opacity: 0;
+}
+
+.big-col {
+  width: 300px;
+  min-height: 300px;
+  margin-left: 25px;
+}
+
+.big-col ul {
+  min-height: 230px;
+  max-height: 230px;
+  overflow-y: auto;
+}
+
+/* For Chrome, Safari, and newer versions of Edge */
+.big-col ul::-webkit-scrollbar {
+  width: 4px; /* Width of the scrollbar */
+}
+
+.big-col ul::-webkit-scrollbar-track {
+  background: rgba(
+    255,
+    255,
+    255,
+    0.32
+  ); /* Track background. Not necessary unless you want a styled track */
+  margin: 5px; /* Vertical margin for the scrollbar */
+  border-radius: 50px;
+}
+
+.big-col ul::-webkit-scrollbar-thumb {
+  width: 4px;
+  background-color: #3fbeea; /* Color of the sliding scrollbar */
+  border-radius: 50px; /* Roundness of the scrollbar */
+  border-right: 4px solid transparent; /* Creates padding around the scroll thumb */
+}
+
+/* For Firefox */
+.big-col ul {
+  scrollbar-width: thin; /* 'auto' or 'thin' */
+  scrollbar-color: #3fbeea transparent; /* thumb and track color */
+  scrollbar-gutter: stable both-edges;
 }

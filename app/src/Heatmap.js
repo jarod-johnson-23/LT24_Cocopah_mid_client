@@ -48,7 +48,6 @@ function Heatmap() {
           }}
         />
       </div>
-
       <iframe src={default_url} id="heatmap-iframe" width="100%"></iframe>
       <iframe src="" id="current-heatmap" width="100%"></iframe>
     </div>

@@ -1,6 +1,7 @@
 import "./InputSection.css";
 import FileDropComponent from "./FileDropComponent";
 import LoadingMessage from "./LoadingMessage";
+import InfoIcon from "./InfoIcon";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
@@ -10,7 +11,9 @@ import {
 } from "react-beautiful-dnd";
 import { API_BASE_URL } from "./../config";
 import earthSvg from "./images/googleEarth.svg";
-import infoSvg from "./images/info.svg";
+import download_svg from "./images/file_download.svg";
+import down_arrow from "./images/down-arrow.svg";
+import copy_svg from "./images/copy-svg.svg";
 
 function InputSection({ onApiDataReceived, onApiDataChange }) {
   const [extractedColumns, setExtractedColumns] = useState([]);
@@ -29,6 +32,42 @@ function InputSection({ onApiDataReceived, onApiDataChange }) {
   const [heatmapUrl, setHeatmapUrl] = useState("");
   const [kmlUrl, setKmlUrl] = useState("");
   const [copySuccess, setCopySuccess] = useState("");
+  const [dataEntered, setDataEntered] = useState(false);
+  const [popups, setPopups] = useState({});
+  const [dragging, setDragging] = useState(false);
+
+  const handleIconClick = (id) => {
+    setPopups((prevPopups) => ({
+      ...prevPopups,
+      [id]: !prevPopups[id],
+    }));
+  };
+
+  useEffect(() => {
+    const closeAllPopups = () => {
+      setPopups({});
+    };
+
+    document.addEventListener("mousedown", closeAllPopups);
+
+    return () => {
+      document.removeEventListener("mousedown", closeAllPopups);
+    };
+  }, []);
+
+  const stopPropagation = (e) => {
+    e.stopPropagation();
+  };
+
+  const handleMouseOver = (event) => {
+    if (dragging) {
+      event.currentTarget.id = "input-col-hover";
+    }
+  };
+
+  const handleMouseOut = (event) => {
+    event.currentTarget.id = "";
+  };
 
   const toggleMenu = (e) => {
     // Check if the click event originated from inside the side menu content
@@ -40,6 +79,7 @@ function InputSection({ onApiDataReceived, onApiDataChange }) {
   };
 
   function handleOnDragEnd(result) {
+    setDragging(false);
     const { source, destination } = result;
 
     // Exit if no destination
@@ -114,12 +154,15 @@ function InputSection({ onApiDataReceived, onApiDataChange }) {
     }
   }
 
-  function handleOnDragStart(start) {}
+  function handleOnDragStart(start) {
+    setDragging(true);
+  }
 
   const onFileUpload = (extractedColumns, uploadedFile) => {
     setExtractedColumns(extractedColumns);
     setToggleColumns(true);
     setFile(uploadedFile);
+    setDataEntered(true);
   };
 
   const handleDownload = async () => {
@@ -169,6 +212,9 @@ function InputSection({ onApiDataReceived, onApiDataChange }) {
   };
 
   const handleSubmit = async () => {
+    if (!buttonVis) {
+      return;
+    }
     setIsLoading(true);
     onApiDataChange();
 
@@ -237,372 +283,339 @@ function InputSection({ onApiDataReceived, onApiDataChange }) {
   }, [zipcodeItem, mainDataItem]);
 
   return (
-    <div
-      className={`side-menu ${isExpanded ? "collapsed" : "expanded"}`}
-      onClick={toggleMenu}
-    >
+    <div className={`side-menu ${isExpanded ? "collapsed" : "expanded"}`}>
+      {popups["unique-popup-1"] && (
+        <div className="popup" onMouseDown={stopPropagation}>
+          Place the column that contains the zipcode values here. Only one
+          column will be accepted.
+        </div>
+      )}
       <div className="side-menu-content">
-        <div className="file-div">
-          <FileDropComponent onFileUpload={onFileUpload} />
+        <div className={`tab ${isExpanded ? "down" : ""}`} onClick={toggleMenu}>
+          <img src={down_arrow} onClick={toggleMenu} />
         </div>
-        <DragDropContext
-          onDragEnd={handleOnDragEnd}
-          onDragStart={handleOnDragStart}
-        >
-          <div
-            className="column-section"
-            style={{ display: toggleColumns ? "flex" : "none" }}
-          >
-            <Droppable droppableId="columnList">
-              {(provided) => (
-                <ul
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className="list main-list"
-                >
-                  {columnData.map((item, index) => (
-                    <RBDraggable
-                      draggableId={item.initialPos.toString()}
-                      index={index}
-                      key={item.initialPos}
-                    >
-                      {(provided) => (
-                        <li
-                          className="box"
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
-                          <div className="inside-box">
-                            <svg
-                              width="20px"
-                              height="20px"
-                              viewBox="0 0 16 16"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="#55555555"
-                              className="bi bi-three-dots-vertical"
-                            >
-                              <path d="M7.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                              <path d="M12.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                            </svg>
-                            <span>{item.value}</span>
-                          </div>
-                        </li>
-                      )}
-                    </RBDraggable>
-                  ))}
-                  {provided.placeholder}
-                </ul>
-              )}
-            </Droppable>
-            <div className="input-cols">
-              <div className="zipcode-col">
-                <div className="column-title-div">
-                  <h4>Zipcode Column</h4>
-                  <img
-                    src={infoSvg}
-                    onClick={() => {
-                      alert(
-                        "Place the column that contains the zipcode values here. Only one column will be accepted."
-                      );
-                    }}
-                  />
-                </div>
-                <Droppable droppableId="zipcodeList">
-                  {(provided) => (
-                    <ul
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                      className="list zipcode-list"
-                    >
-                      {zipcodeItem.map((item, index) => (
-                        <RBDraggable
-                          draggableId={item.initialPos.toString()}
-                          index={index}
-                          key={item.initialPos}
-                        >
-                          {(provided) => (
-                            <li
-                              className="box"
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                              <div className="inside-box">
-                                <svg
-                                  width="20px"
-                                  height="20px"
-                                  viewBox="0 0 16 16"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="#55555555"
-                                  className="bi bi-three-dots-vertical"
-                                >
-                                  <path d="M7.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                                  <path d="M12.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                                </svg>
-                                <span>{item.value}</span>
-                              </div>
-                            </li>
-                          )}
-                        </RBDraggable>
-                      ))}
-                      {provided.placeholder}
-                    </ul>
-                  )}
-                </Droppable>
-              </div>
-              <div className="main-data-col">
-                <div className="column-title-div">
-                  <h4>Main Data Column</h4>
-                  <img
-                    src={infoSvg}
-                    onClick={() => {
-                      alert(
-                        "Place the column that contains the data you want the zipcode coloring based off of. Only one value will be accepted."
-                      );
-                    }}
-                  />
-                </div>
-                <Droppable droppableId="mainDataList">
-                  {(provided) => (
-                    <ul
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                      className="list zipcode-list"
-                    >
-                      {mainDataItem.map((item, index) => (
-                        <RBDraggable
-                          draggableId={item.initialPos.toString()}
-                          index={index}
-                          key={item.initialPos}
-                        >
-                          {(provided) => (
-                            <li
-                              className="box"
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                              <div className="inside-box">
-                                <svg
-                                  width="20px"
-                                  height="20px"
-                                  viewBox="0 0 16 16"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="#55555555"
-                                  className="bi bi-three-dots-vertical"
-                                >
-                                  <path d="M7.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                                  <path d="M12.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                                </svg>
-                                <span>{item.value}</span>
-                              </div>
-                            </li>
-                          )}
-                        </RBDraggable>
-                      ))}
-                      {provided.placeholder}
-                    </ul>
-                  )}
-                </Droppable>
-              </div>
-              <div className="sec-data-col">
-                <div className="column-title-div">
-                  <h4>Secondary Data Column</h4>
-                  <img
-                    src={infoSvg}
-                    onClick={() => {
-                      alert(
-                        "Place columns here where you would like the data to be associated with the zipcode. Multiple values are accepted. These columns will not affect the coloring of zipcodes."
-                      );
-                    }}
-                  />
-                </div>
-                <Droppable droppableId="secDataList">
-                  {(provided) => (
-                    <ul
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                      className="list sec-data-list"
-                    >
-                      {secDataItem.map((item, index) => (
-                        <RBDraggable
-                          draggableId={item.initialPos.toString()}
-                          index={index}
-                          key={item.initialPos}
-                        >
-                          {(provided) => (
-                            <li
-                              className="box"
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                              <div className="inside-box">
-                                <svg
-                                  width="20px"
-                                  height="20px"
-                                  viewBox="0 0 16 16"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="#55555555"
-                                  className="bi bi-three-dots-vertical"
-                                >
-                                  <path d="M7.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                                  <path d="M12.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                                </svg>
-                                <span>{item.value}</span>
-                              </div>
-                            </li>
-                          )}
-                        </RBDraggable>
-                      ))}
-                      {provided.placeholder}
-                    </ul>
-                  )}
-                </Droppable>
-              </div>
-            </div>
-          </div>
-        </DragDropContext>
-        <div
-          className="final-section"
-          style={{ display: buttonVis ? "flex" : "none" }}
-        >
-          <div className="column-title-div">
-            <h4 className="input-label">File Prefix</h4>
-            <img
-              src={infoSvg}
-              onClick={() => {
-                alert(
-                  "Optional value. This will append the prefix to the file name for organizational purposes on your end."
-                );
-              }}
+        <div className="beginning-content">
+          <div className={`file-div ${dataEntered ? "shift-left" : ""}`}>
+            <p className="data-header">Data Source</p>
+            <FileDropComponent
+              onFileUpload={onFileUpload}
+              dataEntered={dataEntered}
             />
           </div>
-          {/* <h4 className="input-label">File Prefix</h4> */}
-          <input
-            type="text"
-            value={prefix}
-            onChange={(e) => {
-              setPrefix(e.target.value);
-            }}
-            className="text-input"
-          ></input>
-          <button onClick={handleSubmit} className="submit-btn">
-            Generate Heatmap
-          </button>
-          {isLoading && <LoadingMessage />}
           <div
-            className="submittedSection"
-            style={{ display: submittedVis ? "flex" : "none" }}
+            className="mid-content"
+            style={{ display: dataEntered ? "flex" : "none" }}
           >
-            <div
-              className="copy-link-section"
-              onClick={(e) => {
-                copyToClipboard(heatmapUrl);
-              }}
+            <DragDropContext
+              onDragEnd={handleOnDragEnd}
+              onDragStart={handleOnDragStart}
             >
-              <p className="blue-text">Copy Link</p>
-              <svg
-                fill="#1897d3"
-                height="20px"
-                width="20px"
-                version="1.1"
-                id="Capa_1"
-                viewBox="0 0 488.3 488.3"
-                className="copy-btn"
+              <div
+                className="column-section"
+                // style={{ display: toggleColumns ? "flex" : "none" }}
               >
-                <g>
-                  <g>
-                    <path
-                      d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124
-			C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124
-			c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z"
-                    />
-                    <path
-                      d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227
-			c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6
-			V38.6C439.65,17.3,422.35,0,401.05,0z"
-                    />
-                  </g>
-                </g>
-              </svg>
-              {copySuccess && <p className="copy-feedback">{copySuccess}</p>}
-            </div>
-            <div className="download-section">
-              <a
-                onClick={handleDownload}
-                href="javascript:void(0)"
-                style={{ cursor: "pointer" }}
-              >
-                Download HTML File
-              </a>
-            </div>
-            <div className="download-section" style={{ cursor: "pointer" }}>
-              <a onClick={handleKmlDownload} href="javascript:void(0)">
-                Download KML File
-              </a>
-              <img src={earthSvg} onClick={handleKmlDownload} alt="info icon" />
-              <img
-                src={infoSvg}
-                onClick={() => {
-                  alert(
-                    "KML files can only be viewed through Google Maps. Visit https://www.google.com/maps/d/u/0/ to create a new map and import the KML file."
-                  );
+                <div className="vert-white-line" />
+                <div className="start-column">
+                  <p className="data-header">Data Columns</p>
+                  <Droppable droppableId="columnList">
+                    {(provided) => (
+                      <ul
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        className="list main-list"
+                      >
+                        {columnData.map((item, index) => (
+                          <RBDraggable
+                            draggableId={item.initialPos.toString()}
+                            index={index}
+                            key={item.initialPos}
+                          >
+                            {(provided) => (
+                              <li
+                                className="box"
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                              >
+                                <div className="inside-box">
+                                  <div className="inside-box-left">
+                                    <svg
+                                      width="21px"
+                                      height="21px"
+                                      viewBox="0 0 15 15"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="#223651"
+                                      className="bi bi-three-dots-vertical"
+                                    >
+                                      <path d="M7.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                    </svg>
+                                  </div>
+                                  <span>{item.value}</span>
+                                </div>
+                              </li>
+                            )}
+                          </RBDraggable>
+                        ))}
+                        {provided.placeholder}
+                      </ul>
+                    )}
+                  </Droppable>
+                </div>
+                <div className="vert-white-line" />
+                <div
+                  className="input-cols"
+                  // id={`${dragging ? "" : "input-col-hover"}`}
+                >
+                  <div className="zipcode-col">
+                    <div className="column-title-div">
+                      <p className="data-header">Zipcode Column</p>
+                      <InfoIcon text="Place the column that contains the zipcodes here. Only one value will be accepted." />
+                    </div>
+                    <Droppable droppableId="zipcodeList">
+                      {(provided) => (
+                        <ul
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                          className="list zipcode-list input-cols-list"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {zipcodeItem.map((item, index) => (
+                            <RBDraggable
+                              draggableId={item.initialPos.toString()}
+                              index={index}
+                              key={item.initialPos}
+                            >
+                              {(provided) => (
+                                <li
+                                  className="box"
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                >
+                                  <div className="inside-box">
+                                    <div className="inside-box-left">
+                                      <svg
+                                        width="21px"
+                                        height="21px"
+                                        viewBox="0 0 15 15"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="#223651"
+                                        className="bi bi-three-dots-vertical"
+                                      >
+                                        <path d="M7.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                      </svg>
+                                    </div>
+                                    <span>{item.value}</span>
+                                  </div>
+                                </li>
+                              )}
+                            </RBDraggable>
+                          ))}
+                          {provided.placeholder}
+                        </ul>
+                      )}
+                    </Droppable>
+                  </div>
+                  <div className="main-data-col">
+                    <div className="column-title-div">
+                      <p className="data-header">Main Data Column</p>
+                      <InfoIcon text="Place the column that contains the data you want the zipcode coloring based off of. Only one value will be accepted." />
+                    </div>
+                    <Droppable droppableId="mainDataList">
+                      {(provided) => (
+                        <ul
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                          className="list zipcode-list input-cols-list"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {mainDataItem.map((item, index) => (
+                            <RBDraggable
+                              draggableId={item.initialPos.toString()}
+                              index={index}
+                              key={item.initialPos}
+                            >
+                              {(provided) => (
+                                <li
+                                  className="box"
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                >
+                                  <div className="inside-box">
+                                    <div className="inside-box-left">
+                                      <svg
+                                        width="21px"
+                                        height="21px"
+                                        viewBox="0 0 15 15"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="#223651"
+                                        className="bi bi-three-dots-vertical"
+                                      >
+                                        <path d="M7.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                      </svg>
+                                    </div>
+                                    <span>{item.value}</span>
+                                  </div>
+                                </li>
+                              )}
+                            </RBDraggable>
+                          ))}
+                          {provided.placeholder}
+                        </ul>
+                      )}
+                    </Droppable>
+                  </div>
+                </div>
+                <div className="big-col">
+                  <div className="sec-data-col">
+                    <div className="column-title-div">
+                      <p className="data-header">Secondary Data Column</p>
+                      <InfoIcon text="Place columns here where you would like the data to be associated with the zipcode. Multiple values are accepted. These columns will not affect the coloring of zipcodes." />
+                    </div>
+                    <Droppable droppableId="secDataList">
+                      {(provided) => (
+                        <ul
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                          className="list sec-data-list input-cols-list"
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        >
+                          {secDataItem.map((item, index) => (
+                            <RBDraggable
+                              draggableId={item.initialPos.toString()}
+                              index={index}
+                              key={item.initialPos}
+                            >
+                              {(provided) => (
+                                <li
+                                  className="box"
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                >
+                                  <div className="inside-box">
+                                    <div className="inside-box-left">
+                                      <svg
+                                        width="21px"
+                                        height="21px"
+                                        viewBox="0 0 15 15"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="#223651"
+                                        className="bi bi-three-dots-vertical"
+                                      >
+                                        <path d="M7.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                      </svg>
+                                    </div>
+                                    <span>{item.value}</span>
+                                  </div>
+                                </li>
+                              )}
+                            </RBDraggable>
+                          ))}
+                          {provided.placeholder}
+                        </ul>
+                      )}
+                    </Droppable>
+                  </div>
+                </div>
+                <div className="vert-white-line" />
+              </div>
+            </DragDropContext>
+            <div
+              className="final-section"
+              // style={{ display: buttonVis ? "flex" : "none" }}
+            >
+              <div className="column-title-div">
+                <p className="data-header">File Prefix</p>
+                <InfoIcon text="Optional value. This will append the prefix to the file name for organizational purposes on your end." />
+              </div>
+              <input
+                type="text"
+                value={prefix}
+                onChange={(e) => {
+                  setPrefix(e.target.value);
                 }}
-                alt="info icon"
-              />
+                className="text-input"
+              ></input>
+              <button
+                onClick={handleSubmit}
+                className={`submit-btn ${isLoading ? "btn-load" : ""} ${
+                  buttonVis ? "" : "btn-disabled"
+                }`}
+              >
+                {isLoading ? <LoadingMessage /> : "Generate Heatmap"}
+              </button>
+              {/* {isLoading && <LoadingMessage />} */}
+              <div
+                className="submittedSection"
+                style={{ display: submittedVis ? "flex" : "none" }}
+              >
+                <div
+                  className="copy-link-section"
+                  onClick={(e) => {
+                    copyToClipboard(heatmapUrl);
+                  }}
+                >
+                  <img src={copy_svg} />
+                  <p className="blue-text">Copy Link</p>
+
+                  {copySuccess && (
+                    <p className="copy-feedback">{copySuccess}</p>
+                  )}
+                </div>
+                <div className="download-section">
+                  <img src={download_svg} />
+                  <a
+                    onClick={handleDownload}
+                    href="javascript:void(0)"
+                    style={{ cursor: "pointer" }}
+                  >
+                    Download HTML File
+                  </a>
+                </div>
+                <div className="download-section" style={{ cursor: "pointer" }}>
+                  <img
+                    src={earthSvg}
+                    onClick={handleKmlDownload}
+                    alt="info icon"
+                  />
+                  <a onClick={handleKmlDownload} href="javascript:void(0)">
+                    Download KML File
+                  </a>
+                  <InfoIcon text="KML files can only be viewed through Google Maps. Visit https://www.google.com/maps/d/u/0/ to create a new map and import the KML file." />
+                  {/* <img
+                    src={infoSvg}
+                    onClick={() => {
+                      alert(
+                        "KML files can only be viewed through Google Maps. Visit https://www.google.com/maps/d/u/0/ to create a new map and import the KML file."
+                      );
+                    }}
+                    alt="info icon"
+                  /> */}
+                </div>
+              </div>
             </div>
           </div>
+
+          <div
+            className={`description-div`}
+            style={{ display: dataEntered ? "none" : "flex" }}
+          >
+            <h1>Heatmap by Zipcode Visualizer</h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur.
+            </p>
+          </div>
         </div>
-      </div>
-
-      <div className="tab" onClick={toggleMenu}>
-        {" "}
-        <svg
-          width="20px"
-          height="20px"
-          viewBox="0 0 23 23"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          onClick={toggleMenu}
-          className="mini-btn"
-        >
-          <g id="SVGRepo_bgCarrier" strokeWidth="0" />
-
-          <g
-            id="SVGRepo_tracerCarrier"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-
-          <g id="SVGRepo_iconCarrier">
-            {" "}
-            <circle
-              opacity="0.5"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="#ffffff"
-              strokeWidth="1.5"
-            />{" "}
-            <path
-              id="horizontalLine"
-              d="M15 12H9"
-              stroke="#ffffff"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />{" "}
-            <path
-              id="verticalLine"
-              d="M11 15V9"
-              stroke="#ffffff"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              className={`${isExpanded ? "minus" : ""}`}
-            />
-          </g>
-        </svg>
       </div>
     </div>
   );

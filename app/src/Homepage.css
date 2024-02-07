@@ -40,13 +40,15 @@
   position: relative;
 }
 
-.img-div::after {
-  content: "";
-  position: absolute;
-  top: 150px;
-  left: 0;
-  height: 150px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+#cocopah_img {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#cocopah_img img {
+  width: auto;
+  max-height: 150px;
 }
 
 .card-info h4 {

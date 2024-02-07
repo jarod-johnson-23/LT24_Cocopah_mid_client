@@ -41,7 +41,7 @@ function LTRedirect() {
       return;
     }
     // Perform the request to create the subdomain...
-    fetch(`${API_BASE_URL}/add_subdomain`, {
+    fetch(`${API_BASE_URL}/subdomain/add_subdomain`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +76,7 @@ function LTRedirect() {
       const token = localStorage.getItem("token");
 
       try {
-        const response = await fetch(`${API_BASE_URL}/protected`, {
+        const response = await fetch(`${API_BASE_URL}/users/protected`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

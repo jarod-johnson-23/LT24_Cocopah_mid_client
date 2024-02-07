@@ -52,7 +52,7 @@ function AdminPage() {
     try {
       // Send a POST request to the /admin/create-user route
       const response = await axios.post(
-        `${API_BASE_URL}/admin/create-user`,
+        `${API_BASE_URL}/users/admin/create-user`,
         data
       );
 
