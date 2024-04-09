@@ -32,6 +32,7 @@ function UserCard({ user }) {
     { label: "Admin Tool Access", value: "admin" },
     { label: "Beau Joke", value: "beau" },
     { label: "LT URL Redirect", value: "lt_redirect" },
+    { label: "Audio Transcription", value: "transcription" },
   ];
 
   const handleUpdateAccess = async () => {

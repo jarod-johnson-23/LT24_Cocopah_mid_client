@@ -1,0 +1,93 @@
+.script-main-content {
+  background-color: #223651ff;
+  padding: 18px 25px 25px 25px;
+  width: 800px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.script-main-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.transcript-btn {
+  width: 292px;
+  height: 54px;
+  background-color: #3fbeea;
+  border: 1.5px solid #3fbeea;
+  color: #223651;
+  font-size: 18px;
+  transition: 0.15s;
+  border-radius: 4px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.right-side-btn {
+  margin-left: 42.5%;
+}
+
+.script-description-section {
+  color: #fff;
+  min-width: 430px;
+  min-height: 200px;
+  padding-left: 65px;
+  padding-right: 45px;
+  line-height: 23px;
+  font-size: 14px;
+}
+
+.script-second-content {
+  display: flex;
+  flex-direction: column;
+  padding-top: 25px;
+}
+
+.script-speaker-section {
+  min-height: 280px;
+}
+
+.speaker-summary {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  color: #fff;
+}
+
+.speaker-summary input {
+  height: 25px;
+  width: 150px;
+  margin: 11px 10px 0 0;
+  font-size: 16px;
+  border: 1px solid #ffffff88;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+  padding-left: 2px;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3fbeea;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  animation: spin 0.8s ease-in-out infinite;
+  margin: 15px 250px; /* Center the spinner and give it some vertical space */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(-50deg);
+  }
+  100% {
+    transform: rotate(310deg);
+  }
+}

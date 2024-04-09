@@ -7,6 +7,7 @@ import beau_img from "./components/images/beau.png";
 import lt_redirect_img from "./components/images/lt_redirect.jpg";
 import basecamp_img from "./components/images/basecamp.jpg";
 import cocopah_img from "./components/images/cocopah_img.png";
+import transcription_img from "./components/images/transcription_img.jpg";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "./config";
@@ -21,6 +22,7 @@ function Homepage() {
   const [lt_redirect, set_lt_redirect] = useState(false);
   const [bcMedia, setBcMedia] = useState(false);
   const [cocopahDB, setCocopahDB] = useState(false);
+  const [transcription, setTranscription] = useState(false);
 
   const getAccess = async (email) => {
     console.log(email);
@@ -46,6 +48,7 @@ function Homepage() {
       set_lt_redirect(access.lt_redirect || false);
       setBcMedia(access.bcMedia || false);
       setCocopahDB(access.cocopah_db || false);
+      setTranscription(access.transcription || false);
     }
   };
 
@@ -176,6 +179,21 @@ function Homepage() {
             </div>
             <div className="card-info">
               <h4>BaseCamp Media Tool</h4>
+            </div>
+          </div>
+        )}
+        {transcription && (
+          <div
+            className="card"
+            onClick={(e) => {
+              navigate("/transcription");
+            }}
+          >
+            <div className="img-div" id="transcription_img">
+              <img src={transcription_img} alt="Audio transcription service" />
+            </div>
+            <div className="card-info">
+              <h4>Audio Transcription Service</h4>
             </div>
           </div>
         )}

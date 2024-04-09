@@ -24,7 +24,7 @@ function FileDropComponent({ onFileUpload, dataEntered }) {
               complete: (results) => {
                 setSelectedFile(file);
                 setFileName(file.name);
-                onFileUpload(results.meta.fields, file);
+                onFileUpload(results.meta.fields, file); // Assuming you want the header fields for CSV
               },
             });
           } else if (ext === "xlsx") {
@@ -34,7 +34,12 @@ function FileDropComponent({ onFileUpload, dataEntered }) {
             const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
             setSelectedFile(file);
             setFileName(file.name);
-            onFileUpload(jsonData[0], file); // Assuming first row has headers
+            onFileUpload(jsonData[0], file); // Assuming first row has headers and that's what you want
+          } else if (ext === "mp3") {
+            // For MP3, directly handle it without parsing
+            setSelectedFile(file);
+            setFileName(file.name);
+            onFileUpload(null, file); // Assuming onFileUpload can handle `null` data for MP3s
           }
         };
 
@@ -42,8 +47,14 @@ function FileDropComponent({ onFileUpload, dataEntered }) {
           reader.readAsText(file);
         } else if (ext === "xlsx") {
           reader.readAsBinaryString(file);
+        } else if (ext === "mp3") {
+          // No need to read MP3 file data here; directly handle the file upload
+          // If you had any client-side processing to do on the MP3, you might need FileReader here
+          setSelectedFile(file);
+          setFileName(file.name);
+          onFileUpload(null, file); // Assuming onFileUpload can handle `null` data for MP3s
         } else {
-          alert("Only CSV and Excel files are allowed.");
+          alert("Only CSV, Excel, and MP3 files are allowed.");
         }
       }
     },

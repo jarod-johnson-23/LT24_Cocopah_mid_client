@@ -11,6 +11,7 @@ import BeauJoke from "./BeauJoke";
 import LTRedirect from "./LTRedirect";
 import BCMediaTool from "./BCMediaTool";
 import CocopahDB from "./CocopahDB";
+import Transcription from "./Transcription";
 
 function App() {
   return (
@@ -78,6 +79,15 @@ function App() {
           element={
             <PrivateRoute>
               <CocopahDB />
+            </PrivateRoute>
+          }
+          exact
+        />
+        <Route
+          path="/transcription"
+          element={
+            <PrivateRoute>
+              <Transcription />
             </PrivateRoute>
           }
           exact

@@ -17,6 +17,7 @@ function AdminPage() {
     { label: "Admin Tool Access", value: "admin" },
     { label: "Beau Joke", value: "beau" },
     { label: "LT URL Redirect", value: "lt_redirect" },
+    { label: "Audio Transcription", value: "transcription" },
   ];
 
   const handleCheckboxChange = (event) => {
@@ -73,6 +74,7 @@ function AdminPage() {
             toyota: accessRights.toyota || false,
             beau: accessRights.beau || false,
             lt_redirect: accessRights.lt_redirect || false,
+            transcription: accessRights.transcription || false,
           },
         };
 
