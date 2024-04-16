@@ -84,7 +84,7 @@ function App() {
           exact
         />
         <Route
-          path="/transcription"
+          path="/transcription/:file_id"
           element={
             <PrivateRoute>
               <Transcription />

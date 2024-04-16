@@ -30,8 +30,19 @@
   cursor: pointer;
 }
 
+.transcript-btn.script-disabled {
+  opacity: 50%;
+  cursor: no-drop;
+}
+
 .right-side-btn {
   margin-left: 42.5%;
+}
+
+.script-holder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .script-description-section {
