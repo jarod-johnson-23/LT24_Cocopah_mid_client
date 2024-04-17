@@ -15,6 +15,7 @@ function Transcription() {
   const [speakerNames, setSpeakerNames] = useState({});
   const [fileSent, setFileSent] = useState(false);
   const [fileUploaded, setFileUploaded] = useState(false);
+  const [uploadComplete, setUploadComplete] = useState(false);
 
   let { file_id } = useParams();
 
@@ -58,6 +59,7 @@ function Transcription() {
       // setSpeakerNames(initialSpeakerNames);
       // setSpeakerSection(true);
       setFileSent(true);
+      setUploadComplete(true);
     }
   };
 
@@ -66,7 +68,7 @@ function Transcription() {
       const response = await axios.post(
         `${API_BASE_URL}/transcription/add_speakers_and_send`,
         {
-          filename: transcriptFilename,
+          filename: file_id,
           speaker_names: speakerNames,
         },
         {
@@ -96,7 +98,30 @@ function Transcription() {
 
   useEffect(() => {
     setEmail(localStorage.getItem("user_email"));
-  }, []);
+    if (file_id !== "upload") {
+      fetch(`${API_BASE_URL}/transcription/grab_file`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ grab_file_name: file_id }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error grabbing file: " + response.status);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setSpeakersSummary(data.dialogue_by_speaker);
+          setSpeakerSection(true);
+          console.log(data.dialogue_by_speaker);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [file_id]);
 
   return (
     <>
@@ -113,7 +138,7 @@ function Transcription() {
                 <div className="script-second-content">
                   <button
                     className={`transcript-btn ${
-                      fileUploaded ? "" : "script-disabled"
+                      fileUploaded || uploadComplete ? "" : "script-disabled"
                     }`}
                     onClick={transcribeAudio}
                   >

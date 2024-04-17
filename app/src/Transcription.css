@@ -36,13 +36,19 @@
 }
 
 .right-side-btn {
-  margin-left: 42.5%;
+  margin-left: 1.05%;
 }
 
 .script-holder {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.script-holder-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
 }
 
 .script-description-section {
