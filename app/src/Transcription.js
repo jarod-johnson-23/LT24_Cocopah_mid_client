@@ -52,12 +52,6 @@ function Transcription() {
     } catch (error) {
       console.error("There was an error uploading the data:", error);
     } finally {
-      // const initialSpeakerNames = {};
-      // Object.keys(speakersSummary).forEach((speakerKey) => {
-      //   initialSpeakerNames[speakerKey] = speakerKey; // Initially, key is the same as value
-      // });
-      // setSpeakerNames(initialSpeakerNames);
-      // setSpeakerSection(true);
       setFileSent(true);
       setUploadComplete(true);
     }
