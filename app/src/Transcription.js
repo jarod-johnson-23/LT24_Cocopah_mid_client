@@ -15,7 +15,6 @@ function Transcription() {
   const [speakerNames, setSpeakerNames] = useState({});
   const [fileSent, setFileSent] = useState(false);
   const [fileUploaded, setFileUploaded] = useState(false);
-  const [uploadComplete, setUploadComplete] = useState(false);
 
   let { file_id } = useParams();
 
@@ -53,7 +52,7 @@ function Transcription() {
       console.error("There was an error uploading the data:", error);
     } finally {
       setFileSent(true);
-      setUploadComplete(true);
+      setFileUploaded(false);
     }
   };
 
@@ -132,7 +131,7 @@ function Transcription() {
                 <div className="script-second-content">
                   <button
                     className={`transcript-btn ${
-                      fileUploaded || uploadComplete ? "" : "script-disabled"
+                      fileUploaded ? "" : "script-disabled"
                     }`}
                     onClick={transcribeAudio}
                   >
