@@ -3,17 +3,18 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import axios from "axios";
 import { API_BASE_URL } from "./config";
-import { useParams } from "react-router-dom";
+import InfoIcon from "./components/InfoIcon";
 import FileDropComponent from "./components/FileDropComponent";
 
 function Transcription() {
   const [audioFile, setAudioFile] = useState(null);
-  const [speakerSection, setSpeakerSection] = useState(true);
+  const [speakerSection, setSpeakerSection] = useState(false);
   const [transcriptFilename, setTranscriptFilename] = useState("");
   const [speakersSummary, setSpeakersSummary] = useState({});
   const [speakerNames, setSpeakerNames] = useState({});
   const [fileUploading, setFileUploading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [prompt, setPrompt] = useState("");
 
   const onAudioFileUpload = (extractedColumns, uploadedFile) => {
     setAudioFile(uploadedFile);
@@ -33,6 +34,7 @@ function Transcription() {
     if (audioFile) {
       if (audioFile.type === "audio/mpeg") {
         formData.append("audio_input", audioFile);
+        formData.append("prompt", prompt);
       } else {
         alert("Only MP3 file are allowed at the moment");
         return 0;
@@ -114,6 +116,16 @@ function Transcription() {
                   className="file-area"
                 />
                 <div className="script-second-content">
+                  <div className="transcript-label-div">
+                    <label>Keywords</label>
+                    <InfoIcon text="Place proper nouns and acronyms here the way you wish them to be displayed. The AI will keep this in mind when generating your transcript. Any format is fine." />
+                  </div>
+                  <input
+                    type="text"
+                    defaultValue={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    className="transcript-input"
+                  />
                   <button
                     className={`transcript-btn ${
                       fileUploading ? "script-disabled" : ""
@@ -132,10 +144,12 @@ function Transcription() {
                       <h2>Audio Transcription Service</h2>
                       <p>
                         This tool is used to convert an mp3 audio file into a
-                        transcript. File processing may take multiple minutes to
-                        an hour depending on file size. Once the file is
-                        processed, edit the generated speaker names based on the
-                        first 3 spoken lines from a given speaker.
+                        transcript. File processing may take multiple minutes
+                        depending on file size. Utilize the Keywords field to
+                        ensure proper nouns and acronyms are spelled correctly
+                        on the final transcript. Once the file is processed,
+                        edit the generated speaker names based on the first 3
+                        spoken lines from a given speaker.
                       </p>
                     </>
                   ) : (

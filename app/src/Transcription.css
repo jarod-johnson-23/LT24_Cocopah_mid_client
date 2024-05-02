@@ -93,6 +93,29 @@
   padding-left: 2px;
 }
 
+.transcript-label-div {
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.transcript-label-div label {
+  margin-bottom: 4px;
+}
+
+.transcript-input {
+  height: 25px;
+  width: 98%;
+  margin: 0px 10px 20px 0;
+  font-size: 16px;
+  border: 1px solid #ffffff88;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+  padding-left: 2px;
+}
+
 .spinner {
   border: 6px solid #f3f3f3;
   border-top: 6px solid #3fbeea;
