@@ -26,7 +26,6 @@ function Homepage() {
 
   const getAccess = async (email) => {
     console.log(email);
-    localStorage.setItem("user_email", email);
     setEmail(email);
     const body = {
       email: email,
@@ -187,7 +186,7 @@ function Homepage() {
           <div
             className="card"
             onClick={(e) => {
-              navigate("/transcription/upload");
+              navigate("/transcription");
             }}
           >
             <div className="img-div" id="transcription_img">
