@@ -11,6 +11,7 @@ function LTRedirect() {
   const [redirectUrl, setRedirectUrl] = useState("");
   const [email, setEmail] = useState("");
   const [subdomainsList, setSubdomainsList] = useState([]);
+  const [duplicateSubdomain, setDuplicateSubdomain] = useState(false);
   let navigate = useNavigate();
 
   const validateSubdomain = (subdomain) => {
@@ -38,6 +39,11 @@ function LTRedirect() {
 
     if (!validateRedirectUrl(redirectUrl)) {
       alert("Invalid redirect URL. Please enter a valid URL.");
+      return;
+    }
+
+    if (duplicateSubdomain) {
+      alert("This subdomain is already taken. Please choose another value.");
       return;
     }
     // Perform the request to create the subdomain...
@@ -112,6 +118,48 @@ function LTRedirect() {
         console.error("Error deleting subdomain:", error.message);
       });
   };
+
+  async function setAndCheckSubdomain(subdomainToCheck) {
+    setSubdomain(subdomainToCheck);
+    try {
+      const token = localStorage.getItem("token");
+      // Make a GET request to fetch all subdomains
+      const response = await fetch(
+        `${API_BASE_URL}/subdomain/get_all_subdomains`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // If a JWT token is needed
+          },
+          credentials: "include",
+        }
+      );
+
+      // Check if the response is successful
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Parse the response data
+      const data = await response.json();
+      const { subdomains } = data;
+
+      // Check if the provided subdomain exists in the list
+      const isDuplicate = subdomains.some(
+        (sub) => sub.subdomain === subdomainToCheck
+      );
+
+      if (isDuplicate) {
+        setDuplicateSubdomain(true);
+      } else {
+        setDuplicateSubdomain(false);
+      }
+    } catch (error) {
+      console.error("Error fetching subdomains:", error.message);
+      return false; // Return false if there is an error, assuming it's not unique
+    }
+  }
 
   useEffect(() => {
     const validateTokenAndFetchSubdomains = async () => {
@@ -194,7 +242,7 @@ function LTRedirect() {
               <input
                 type="text"
                 value={subdomain}
-                onChange={(e) => setSubdomain(e.target.value)}
+                onChange={(e) => setAndCheckSubdomain(e.target.value)}
                 required
                 id="small-text-box"
                 className="small-text-box lowercase"
@@ -217,7 +265,18 @@ function LTRedirect() {
                 autoCapitalize="none"
               />
             </div>
-            <button type="submit" className="redirect-btn">
+            {duplicateSubdomain ? (
+              <div className="duplicate-warning">
+                <h3>Duplicate Subdomain</h3>
+              </div>
+            ) : (
+              <></>
+            )}
+            <button
+              type="submit"
+              className="redirect-btn"
+              id={`${duplicateSubdomain ? "subdomain-btn-disabled" : ""}`}
+            >
               Request Redirect
             </button>
           </form>
