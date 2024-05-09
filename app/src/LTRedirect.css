@@ -1,9 +1,14 @@
 .redirect-form-container {
-  width: 600px;
+  width: 33%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 25px;
+  margin: 50px;
+  background-color: #223651ff;
+  border-radius: 8px;
+  color: #fff;
+  padding: 60px 0px 80px 0px;
+  max-height: 200px;
 }
 
 .static-text {
@@ -11,7 +16,7 @@
   font-size: 24px;
 }
 
-.small-text-box {
+#small-text-box {
   text-align: right;
   width: 180px;
 }
@@ -38,45 +43,43 @@
 }
 
 .redirect-btn {
-  width: 300px;
-  height: 55px;
-  background-color: #1897d3;
-  border: 1.5px solid #1897d3;
-  font-weight: 600;
-  color: #fff;
+  width: 290px;
+  height: 54px;
+  background-color: #3fbeea;
+  border: 1.5px solid #3fbeea;
+  color: #223651;
   font-size: 18px;
   transition: 0.15s;
   border-radius: 4px;
-  margin: 5px 25px 25px 0px;
+  font-weight: 900;
+  cursor: pointer;
 }
 
 .redirect-btn:hover {
   cursor: pointer;
-  background-color: #fff;
-  color: #1897d3;
+  background-color: #223651;
+  color: #3fbeea;
 }
 
 .redirect-input-class {
   display: flex;
   flex-direction: row;
   align-items: left;
-  width: 300px;
-  gap: 5px;
-  color: #555555;
+  width: 205px;
+  color: #fff;
 }
 
 .redirect-input-class input {
-  border: 1.5px solid #1897d3;
-  border-radius: 4px;
   height: 35px;
-  margin-bottom: 15px;
-  color: #555555;
-  padding-left: 5px;
+  width: 285px;
+  margin: 3px 4px 16px 0;
+  font-size: 16px;
+  border: 1px solid #ffffff88;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+  padding-left: 2px;
   font-size: 24px;
-}
-
-input.lowercase {
-  text-transform: lowercase;
 }
 
 .redirect-form {
@@ -85,68 +88,76 @@ input.lowercase {
   align-items: left;
 }
 
-.toggle-container {
-  width: 100%;
-  height: 50px;
-  background-color: #f0f0f0;
-  border-radius: 5px;
-  position: relative;
-  cursor: pointer;
-  user-select: none;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 10px;
-  margin-bottom: 20px;
-}
-
-.slider {
-  width: 50%;
-  height: 100%;
-  background-color: #1897d3;
-  border-radius: 5px;
-  position: absolute;
-  top: 0;
-  transition: left 0.3s; /* Smoothly transition the left property */
-  z-index: 1; /* Keep the slider behind the text */
-}
-
-.slider.left {
-  left: 0;
-}
-
-.slider.right {
-  left: 50%; /* Move the slider to cover the right half */
-}
-
-.toggle-text {
-  z-index: 2; /* Ensure the text is on top of the slider */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  height: 100%;
-  position: absolute;
-  font-size: 20px;
-  color: #fff;
-  transition: 0.3s;
-}
-
-.toggle-text.left-text {
-  opacity: 1; /* Fully visible if on the left side */
-  left: 0;
-}
-
-.toggle-text.right-text {
-  opacity: 1; /* Slightly transparent if on the right side */
-  right: 0;
-}
-
-.toggle-container:hover .toggle-text {
-  /* Slightly increase the opacity on hover for better user experience */
-  opacity: 0.85;
-}
-
 .faded {
   opacity: 0.5;
   color: #555; /* This class will make the text more transparent */
+}
+
+.lt-redirect-page-content {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
+.subdomain-cards {
+  width: 33%;
+  background-color: #223651ff;
+  border-radius: 8px;
+  color: #fff;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+  max-height: fit-content;
+}
+
+.subdomain-card {
+  background: #223651;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  border: 3px solid #e8913d;
+  display: flex;
+  flex-direction: row;
+  /* justify-content: top; */
+  justify-content: space-between;
+}
+
+.subdomain-card:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.subdomain-card a {
+  color: #e8913d;
+  cursor: pointer;
+}
+
+.subdomain-card a:hover {
+  text-decoration: none;
+}
+
+.subdomain-active {
+  background: #155724;
+  width: fit-content;
+  padding: 8px 20px;
+  border-radius: 8px;
+}
+
+.subdomain-inactive {
+  background: #db242b;
+  width: fit-content;
+  padding: 8px 20px;
+  border-radius: 8px;
+}
+
+.subdomain-card-right img {
+  width: 30px;
+  transition: 0.3s;
+  scale: 1;
+}
+
+.subdomain-card-right img:hover {
+  cursor: pointer;
+  scale: 1.2;
 }

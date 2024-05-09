@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "./config";
 import { useNavigate } from "react-router-dom";
+import trash_svg from "./components/images/trash.svg";
 
 function LTRedirect() {
   const [subdomain, setSubdomain] = useState("");
   const [redirectUrl, setRedirectUrl] = useState("");
   const [email, setEmail] = useState("");
-  const [isProfessional, setIsProfessional] = useState(false);
-  const domain = isProfessional ? ".lt.agency" : ".laneterraleverapi.org";
+  const [subdomainsList, setSubdomainsList] = useState([]);
   let navigate = useNavigate();
 
   const validateSubdomain = (subdomain) => {
@@ -49,34 +49,77 @@ function LTRedirect() {
       },
       credentials: "include",
       body: JSON.stringify({
+        // Corrected to stringify the object
         subdomain_name: subdomain,
-        domain_name: isProfessional,
         redirect_link: redirectUrl,
         email: email,
       }),
     })
-      .then((response) => response.json()) // Parse the JSON response
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error. Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log(data);
-        // Handle success response (maybe show a success message to the user)
+        // Add the new subdomain to the state
+        let new_subdomain = {
+          subdomain: subdomain,
+          redirect_url: redirectUrl,
+          is_activte: false,
+        };
+        setSubdomainsList((prevList) => [...prevList, new_subdomain]);
+
+        // Clear input fields
+        setSubdomain("");
+        setRedirectUrl("");
       })
       .catch((error) => {
-        console.error("Error creating subdomain:", error.message);
-        // Handle API errors (maybe show an error message to the user)
+        console.error("Error creating subdomain:", error.status);
       });
   };
 
-  const toggleUseType = () => {
-    setIsProfessional(!isProfessional);
-    // Here you can handle additional state updates or API calls based on the toggle
+  const delete_subdomain = (subdomainName, redirect) => {
+    const token = localStorage.getItem("token");
+
+    fetch(`${API_BASE_URL}/subdomain/delete_subdomain`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        subdomain_name: subdomainName,
+        redirect_url: redirect,
+        email: email,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(() => {
+        // Remove subdomain from the state
+        setSubdomainsList((prevList) =>
+          prevList.filter((sub) => sub.subdomain !== subdomainName)
+        );
+      })
+      .catch((error) => {
+        console.error("Error deleting subdomain:", error.message);
+      });
   };
 
   useEffect(() => {
-    const validateToken = async () => {
+    const validateTokenAndFetchSubdomains = async () => {
       const token = localStorage.getItem("token");
 
       try {
-        const response = await fetch(`${API_BASE_URL}/users/protected`, {
+        // Validate Token
+        const authResponse = await fetch(`${API_BASE_URL}/users/protected`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -84,31 +127,50 @@ function LTRedirect() {
           credentials: "include",
         });
 
-        if (response.ok) {
-          const data = await response.json();
+        if (authResponse.ok) {
+          const data = await authResponse.json();
           setEmail(data.logged_in_as);
+
+          // Fetch Subdomains once the email is set
+          const subdomainsResponse = await fetch(
+            `${API_BASE_URL}/subdomain/get_subdomains_by_email?email=${data.logged_in_as}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              credentials: "include",
+            }
+          );
+          const subdomainsData = await subdomainsResponse.json();
+          if (subdomainsResponse.ok) {
+            setSubdomainsList(subdomainsData.subdomains); // Store subdomains
+          } else {
+            console.error("Failed to fetch subdomains:", subdomainsData.error);
+            // Optionally handle errors or empty states
+          }
         } else {
           // If the token is not valid, remove it from localStorage
           localStorage.removeItem("token");
           navigate("/");
         }
       } catch (error) {
-        console.error("Error validating token", error);
+        console.error("Error validating token or fetching subdomains", error);
         localStorage.removeItem("token");
         navigate("/");
-      } finally {
       }
     };
 
-    validateToken();
-  }, [navigate]);
+    validateTokenAndFetchSubdomains();
+  }, [navigate]); // Ensures this only reruns when navigate changes
 
   return (
     <div className="lt-redirect-page">
       <Navbar />
-      <div className="redirect-form-container">
-        <form onSubmit={handleSubmit} className="redirect-form">
-          <div className="toggle-container" onClick={toggleUseType}>
+      <div className="lt-redirect-page-content">
+        <div className="redirect-form-container">
+          <form onSubmit={handleSubmit} className="redirect-form">
+            {/* <div className="toggle-container" onClick={toggleUseType}>
             <div
               className={`slider ${isProfessional ? "right" : "left"}`}
             ></div>
@@ -126,38 +188,80 @@ function LTRedirect() {
             >
               Professional Use
             </div>
-          </div>
-          <label className="redirect-label">This URL...</label>
-          <div className="redirect-input-class">
-            <input
-              type="text"
-              value={subdomain}
-              onChange={(e) => setSubdomain(e.target.value)}
-              required
-              className="small-text-box lowercase"
-              autoCorrect="off"
-              spellCheck="false"
-              autoCapitalize="none"
-            />
-            <span className="static-text">{domain}</span>
-          </div>
-          <label className="redirect-label">...redirects to:</label>
-          <div className="redirect-input-class" id="wide-input">
-            <input
-              type="text"
-              value={redirectUrl}
-              onChange={(e) => setRedirectUrl(e.target.value)}
-              required
-              className="wide-text-box"
-              autoCorrect="off"
-              spellCheck="false"
-              autoCapitalize="none"
-            />
-          </div>
-          <button type="submit" className="redirect-btn">
-            Request Redirect
-          </button>
-        </form>
+          </div> */}
+            <label className="redirect-label">This URL...</label>
+            <div className="redirect-input-class">
+              <input
+                type="text"
+                value={subdomain}
+                onChange={(e) => setSubdomain(e.target.value)}
+                required
+                id="small-text-box"
+                className="small-text-box lowercase"
+                autoCorrect="off"
+                spellCheck="false"
+                autoCapitalize="none"
+              />
+              <span className="static-text">.lt.agency</span>
+            </div>
+            <label className="redirect-label">...redirects to:</label>
+            <div className="redirect-input-class" id="wide-input">
+              <input
+                type="text"
+                value={redirectUrl}
+                onChange={(e) => setRedirectUrl(e.target.value)}
+                required
+                className="wide-text-box"
+                autoCorrect="off"
+                spellCheck="false"
+                autoCapitalize="none"
+              />
+            </div>
+            <button type="submit" className="redirect-btn">
+              Request Redirect
+            </button>
+          </form>
+        </div>
+        <div className="subdomain-cards">
+          <h2 className="subdomain-list-header">Owned Subdomains</h2>
+          {subdomainsList.length > 0 ? (
+            subdomainsList.map((subdomain) => (
+              <div key={subdomain.subdomain} className="subdomain-card">
+                <div className="subdomain-card-left">
+                  <h2>{subdomain.subdomain}.lt.agency</h2>
+                  <p>
+                    Redirects to:{" "}
+                    <a
+                      href={subdomain.redirect_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {subdomain.redirect_url}
+                    </a>
+                  </p>
+                  {subdomain.is_active ? (
+                    <div className="subdomain-active">Active</div>
+                  ) : (
+                    <div className="subdomain-inactive">Inactive</div>
+                  )}
+                </div>
+                <div
+                  className="subdomain-card-right"
+                  onClick={() => {
+                    delete_subdomain(
+                      subdomain.subdomain,
+                      subdomain.redirect_url
+                    );
+                  }}
+                >
+                  <img src={trash_svg} />
+                </div>
+              </div>
+            ))
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
     </div>
   );

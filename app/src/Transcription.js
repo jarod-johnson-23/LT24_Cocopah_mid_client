@@ -117,14 +117,16 @@ function Transcription() {
                 />
                 <div className="script-second-content">
                   <div className="transcript-label-div">
-                    <label>Keywords</label>
-                    <InfoIcon text="Place proper nouns and acronyms here the way you wish them to be displayed. The AI will keep this in mind when generating your transcript. Any format is fine." />
+                    <label style={{ color: "#888888" }}>Keywords</label>
+                    <InfoIcon text="Place proper nouns and acronyms here the way you wish them to be displayed. The AI will keep this in mind when generating your transcript. Any format is fine. (CURRENTLY NOT WORKING)" />
                   </div>
                   <input
                     type="text"
                     defaultValue={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     className="transcript-input"
+                    style={{ cursor: "not-allowed" }}
+                    disabled
                   />
                   <button
                     className={`transcript-btn ${
