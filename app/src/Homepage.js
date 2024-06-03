@@ -8,6 +8,7 @@ import lt_redirect_img from "./components/images/lt_redirect.jpg";
 import basecamp_img from "./components/images/basecamp.jpg";
 import cocopah_img from "./components/images/cocopah_img.png";
 import transcription_img from "./components/images/transcription_img.jpg";
+import sowUpload_img from "./components/images/win98-upload.gif";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "./config";
@@ -23,6 +24,7 @@ function Homepage() {
   const [bcMedia, setBcMedia] = useState(false);
   const [cocopahDB, setCocopahDB] = useState(false);
   const [transcription, setTranscription] = useState(false);
+  const [sowUpload, setSowUpload] = useState(false);
 
   const getAccess = async (email) => {
     console.log(email);
@@ -49,6 +51,7 @@ function Homepage() {
       setBcMedia(access.bcMedia || false);
       setCocopahDB(access.cocopah_db || false);
       setTranscription(access.transcription || false);
+      setSowUpload(access.sowUpload || false);
     }
   };
 
@@ -209,6 +212,21 @@ function Homepage() {
             </div>
             <div className="card-info">
               <h4>Cocopah Database Management Tool</h4>
+            </div>
+          </div>
+        )}
+        {sowUpload && (
+          <div
+            className="card"
+            onClick={(e) => {
+              navigate("/sow_upload");
+            }}
+          >
+            <div className="img-div" id="sow_img">
+              <img src={sowUpload_img} alt="win98 uploading" />
+            </div>
+            <div className="card-info">
+              <h4>SOW Upload Tool</h4>
             </div>
           </div>
         )}

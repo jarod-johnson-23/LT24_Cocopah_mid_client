@@ -18,6 +18,7 @@ function AdminPage() {
     { label: "Beau Joke", value: "beau" },
     { label: "LT URL Redirect", value: "lt_redirect" },
     { label: "Audio Transcription", value: "transcription" },
+    { label: "SOW Upload Tool", value: "sowUpload" },
   ];
 
   const handleCheckboxChange = (event) => {
@@ -75,6 +76,7 @@ function AdminPage() {
             beau: accessRights.beau || false,
             lt_redirect: accessRights.lt_redirect || false,
             transcription: accessRights.transcription || false,
+            sowUplaod: accessRights.sowUpload || false,
           },
         };
 

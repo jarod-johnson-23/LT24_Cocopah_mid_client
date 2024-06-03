@@ -607,12 +607,7 @@ function InputSection({ onApiDataReceived, onApiDataChange }) {
           >
             <h1>Heatmap by Zipcode Visualizer</h1>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.
+              This tool creates heatmaps from zipcode-grouped data. Both CSV and XLSX files are accepted. For Excel files, place the data in the top left corner of the sheet to avoid unexpeted results. Drag and drop or select your file from the box on the left to get started. 
             </p>
           </div>
         </div>

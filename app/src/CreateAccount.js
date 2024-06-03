@@ -123,7 +123,7 @@ const CreateAccount = () => {
           />
         </div>
         <div className="input-class">
-          <label>Role: </label>
+          <label>Title: </label>
           <input
             type="text"
             value={role}

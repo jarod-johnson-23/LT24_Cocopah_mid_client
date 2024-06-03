@@ -12,6 +12,7 @@ import LTRedirect from "./LTRedirect";
 import BCMediaTool from "./BCMediaTool";
 import CocopahDB from "./CocopahDB";
 import Transcription from "./Transcription";
+import SowUpload from "./SowUpload";
 
 function App() {
   return (
@@ -88,6 +89,15 @@ function App() {
           element={
             <PrivateRoute>
               <Transcription />
+            </PrivateRoute>
+          }
+          exact
+        />
+        <Route
+          path="/sow_upload"
+          element={
+            <PrivateRoute>
+              <SowUpload />
             </PrivateRoute>
           }
           exact

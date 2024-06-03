@@ -33,6 +33,7 @@ function UserCard({ user }) {
     { label: "Beau Joke", value: "beau" },
     { label: "LT URL Redirect", value: "lt_redirect" },
     { label: "Audio Transcription", value: "transcription" },
+    { label: "SOW Uplaod Tool", value: "sowUpload" },
   ];
 
   const handleUpdateAccess = async () => {

@@ -318,7 +318,7 @@ function LTRedirect() {
               </div>
             ))
           ) : (
-            <></>
+            <h5>You do not currently own any subdomains, please fill out a request to secure your subdomains</h5>
           )}
         </div>
       </div>
