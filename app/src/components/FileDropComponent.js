@@ -35,11 +35,13 @@ function FileDropComponent({ onFileUpload, dataEntered }) {
             setSelectedFile(file);
             setFileName(file.name);
             onFileUpload(jsonData[0], file); // Assuming first row has headers and that's what you want
-          } else if (ext === "mp3") {
-            // For MP3, directly handle it without parsing
+          } else if (["mp3", "mp4", "wav", "m4a", "aac", "ogg"].includes(ext)) {
+            // For audio files, directly handle them without parsing
             setSelectedFile(file);
             setFileName(file.name);
-            onFileUpload(null, file); // Assuming onFileUpload can handle `null` data for MP3s
+            onFileUpload(null, file); // Assuming onFileUpload can handle `null` data for audio files
+          } else {
+            alert("Only CSV, Excel, MP3, MP4, WAV, M4A, AAC, and OGG files are allowed.");
           }
         };
 
@@ -47,14 +49,12 @@ function FileDropComponent({ onFileUpload, dataEntered }) {
           reader.readAsText(file);
         } else if (ext === "xlsx") {
           reader.readAsBinaryString(file);
-        } else if (ext === "mp3") {
-          // No need to read MP3 file data here; directly handle the file upload
-          // If you had any client-side processing to do on the MP3, you might need FileReader here
+        } else if (["mp3", "mp4", "wav", "m4a", "aac", "ogg"].includes(ext)) {
+          // No need to read audio file data here; directly handle the file upload
+          // If you had any client-side processing to do on the audio files, you might need FileReader here
           setSelectedFile(file);
           setFileName(file.name);
-          onFileUpload(null, file); // Assuming onFileUpload can handle `null` data for MP3s
-        } else {
-          alert("Only CSV, Excel, and MP3 files are allowed.");
+          onFileUpload(null, file); // Assuming onFileUpload can handle `null` data for audio files
         }
       }
     },
@@ -64,6 +64,7 @@ function FileDropComponent({ onFileUpload, dataEntered }) {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     maxFiles: 1,
+    accept: ".csv, .xlsx, .mp3, .mp4, .wav, .m4a, .aac, .ogg",
   });
 
   return (

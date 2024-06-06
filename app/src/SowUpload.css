@@ -1,0 +1,56 @@
+.sow-main-content {
+  width: fit-content;
+  background-color: #223651;
+  border-radius: 8px;
+  margin: 50px;
+  padding: 25px;
+}
+
+.sow-page {
+  min-width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.sow-btn {
+  width: 100%;
+  height: 54px;
+  background-color: #3fbeea;
+  border: 1.5px solid #3fbeea;
+  color: #223651;
+  font-size: 18px;
+  transition: 0.15s;
+  border-radius: 4px;
+  font-weight: 900;
+  margin-top: 15px;
+}
+
+.sow-btn:hover {
+  cursor: pointer;
+  background-color: #223651;
+  color: #3fbeea;
+}
+
+.sow-upload-title {
+  color: #fff;
+  margin: 0px auto 20px auto;
+}
+
+.sow-url-input {
+  height: 25px;
+  width: 277px;
+  margin: 5px 10px 0 0;
+  font-size: 16px;
+  border: 1px solid #ffffff88;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+  padding-left: 2px;
+}
+
+.input-label-combo-wombo {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}

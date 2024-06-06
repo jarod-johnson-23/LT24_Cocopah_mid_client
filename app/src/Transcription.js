@@ -32,11 +32,12 @@ function Transcription() {
     setIsLoading(true);
     const formData = new FormData();
     if (audioFile) {
-      if (audioFile.type === "audio/mpeg") {
+      const allowedTypes = ["audio/mpeg", "audio/mp4", "audio/wav", "audio/x-m4a", "audio/aac", "audio/ogg"];
+      if (allowedTypes.includes(audioFile.type)) {
         formData.append("audio_input", audioFile);
         formData.append("prompt", prompt);
       } else {
-        alert("Only MP3 file are allowed at the moment");
+        alert("Only MP3, MP4, WAV, M4A, AAC, and OGG files are allowed at the moment");
         return 0;
       }
     } else {
