@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import Homepage from "./Homepage";
 import AdminTools from "./AdminPage";
@@ -8,7 +8,7 @@ import CocopahDB from "./CocopahDB";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Homepage />} exact />
@@ -32,7 +32,7 @@ function App() {
         />
         <Route path="*" element={<Login />} exact />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
