@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar"; // Adjust the import according to your project structure
 import { API_BASE_URL } from "./config";
 
 const PrivateRoute = ({ children }) => {
@@ -9,32 +9,20 @@ const PrivateRoute = ({ children }) => {
 
   useEffect(() => {
     const validateToken = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        setIsAuthenticated(false);
-        setIsLoading(false);
-        return;
-      }
-
       try {
-        const response = await fetch(`${API_BASE_URL}/users/protected`, {
+        const response = await fetch(`${API_BASE_URL}/check-token`, {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          credentials: "include", // if your API requires credentials
+          credentials: "include", // Include cookies in the request
         });
 
         if (response.ok) {
           setIsAuthenticated(true);
         } else {
-          // If the token is not valid, remove it from localStorage
-          localStorage.removeItem("token");
           setIsAuthenticated(false);
+
         }
       } catch (error) {
         console.error("Error validating token", error);
-        localStorage.removeItem("token");
         setIsAuthenticated(false);
       } finally {
         setIsLoading(false);
@@ -48,8 +36,9 @@ const PrivateRoute = ({ children }) => {
     return (
       <div>
         <Navbar />
+        {/* Add a loading indicator here if needed */}
       </div>
-    ); // Or some other loading indicator
+    );
   }
 
   return isAuthenticated ? children : <Navigate to="/" />;

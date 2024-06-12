@@ -2,7 +2,7 @@ import "./Login.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./components/Navbar";
-import LTlogo from "./components/images/LT_logo.svg";
+import LTlogo from "./components/images/cocopah_img.png";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "./config";
 
@@ -32,13 +32,12 @@ function Login() {
 
     // Rest of submit logic
     try {
-      const response = await axios.post(`${API_BASE_URL}/users/login`, {
+      const response = await axios.post(`${API_BASE_URL}/create-token`, {
         email,
         password,
       });
 
-      if (response.status === 200 && response.data.access_token) {
-        localStorage.setItem("token", response.data.access_token);
+      if (response.status === 200) {
         navigate("/dashboard");
       }
     } catch (error) {
