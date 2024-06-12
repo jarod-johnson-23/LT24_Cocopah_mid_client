@@ -8,7 +8,7 @@ import CocopahDB from "./CocopahDB";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/admin-dashboard">
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Homepage />} exact />

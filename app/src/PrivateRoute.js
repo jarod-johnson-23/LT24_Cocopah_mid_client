@@ -41,7 +41,7 @@ const PrivateRoute = ({ children }) => {
     );
   }
 
-  return isAuthenticated ? children : <Navigate to="/" />;
+  return isAuthenticated ? children : <Navigate to="/admin-dashboard" />;
 };
 
 export default PrivateRoute;
