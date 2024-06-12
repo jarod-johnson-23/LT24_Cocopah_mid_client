@@ -38,7 +38,7 @@ function Login() {
       });
 
       if (response.status === 200) {
-        navigate("/admin-dashboard/dashboard");
+        navigate("/dashboard");
       }
     } catch (error) {
       if (error.response) {
