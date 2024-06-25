@@ -5,12 +5,13 @@ import Homepage from "./Homepage";
 import AdminTools from "./AdminPage";
 import Login from "./Login";
 import CocopahDB from "./CocopahDB";
+import FileUpload from "./FileUpload";
 
 function App() {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<FileUpload />} />
         <Route path="/dashboard" element={<Homepage />} exact />
         <Route
           path="/admin_tools"
@@ -27,6 +28,15 @@ function App() {
             <PrivateRoute>
               <CocopahDB />
             </PrivateRoute>
+          }
+          exact
+        />
+        <Route
+          path="/file_upload"
+          element={
+            // <PrivateRoute>
+              <FileUpload />
+            /* </PrivateRoute> */
           }
           exact
         />
