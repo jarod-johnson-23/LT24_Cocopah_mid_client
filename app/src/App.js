@@ -11,7 +11,7 @@ function App() {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/" element={<FileUpload />} />
+        <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Homepage />} exact />
         <Route
           path="/admin_tools"
@@ -34,9 +34,9 @@ function App() {
         <Route
           path="/file_upload"
           element={
-            // <PrivateRoute>
+            <PrivateRoute>
               <FileUpload />
-            /* </PrivateRoute> */
+            </PrivateRoute> 
           }
           exact
         />
