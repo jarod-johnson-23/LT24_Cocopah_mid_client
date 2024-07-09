@@ -6,6 +6,8 @@
   background-color:#223651;
   border-radius: 8px;
   padding: 20px;
+  width: fit-content;
+  max-width: 500px;
 }
 
 /* Styling for the file drop area */
@@ -35,6 +37,7 @@
 
 .radio-buttons input[type="radio"] {
   margin-right: 5px;
+  color: #fff;
 }
 
 .portal-upload-main button {
