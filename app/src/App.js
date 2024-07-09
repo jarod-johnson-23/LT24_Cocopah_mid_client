@@ -36,7 +36,7 @@ function App() {
           path="/portal-offer-tool"
           element={
             <PrivateRoute>
-              <PortalOffersUpload />
+              <PortalTool />
             </PrivateRoute>
           }
           exact
