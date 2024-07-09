@@ -11,6 +11,7 @@ function Homepage() {
   const [email, setEmail] = useState("");
   const [admin, setAdmin] = useState(true);
   const [cocopahDB, setCocopahDB] = useState(true);
+  const [portalOfferTool, setPortalOfferTool] = useState(true);
 
   useEffect(() => {
     const validateToken = async () => {
@@ -51,6 +52,21 @@ function Homepage() {
             </div>
             <div className="card-info">
               <h4>Cocopah Database Management Tool</h4>
+            </div>
+          </div>
+        )}
+        {portalOfferTool && (
+          <div
+            className="card"
+            onClick={(e) => {
+              navigate("/portal-offer-tool");
+            }}
+          >
+            <div className="img-div" id="cocopah_img">
+              <img src={cocopah_img} alt="cocopah DB service" />
+            </div>
+            <div className="card-info">
+              <h4>Player Portal Offers Tool</h4>
             </div>
           </div>
         )}

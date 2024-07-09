@@ -6,6 +6,7 @@ import AdminTools from "./AdminPage";
 import Login from "./Login";
 import CocopahDB from "./CocopahDB";
 import FileUpload from "./FileUpload";
+import PortalTool from "./PortalOffersUpload";
 
 function App() {
   return (
@@ -32,6 +33,15 @@ function App() {
           exact
         />
         <Route
+          path="/portal-offer-tool"
+          element={
+            <PrivateRoute>
+              <PortalOffersUpload />
+            </PrivateRoute>
+          }
+          exact
+        />
+        {/* <Route
           path="/file_upload"
           element={
             <PrivateRoute>
@@ -39,7 +49,7 @@ function App() {
             </PrivateRoute> 
           }
           exact
-        />
+        /> */}
         <Route path="*" element={<Login />} exact />
       </Routes>
     </HashRouter>
