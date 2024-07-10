@@ -13,6 +13,7 @@ function CocopahDB() {
   const [seasonalPatrons, setSeasonalPatrons] = useState(null);
   const [patriotCardPatrons, setPatriotCardPatrons] = useState(null);
   const [claTierPatrons, setClaTierPatrons] = useState(null);
+  const [dateValue, setDateValue] = useState("");
 
   const [specialOffers, setSpecialOffers] = useState(
     Array(5).fill({
@@ -143,20 +144,20 @@ function CocopahDB() {
   const handleCopyDown = (index, dataType, col) => {
     setSpecialOffers((prevOffers) => {
       const newOffers = [...prevOffers];
-  
-      if (dataType === 'tierData') {
+
+      if (dataType === "tierData") {
         const firstValue = newOffers[index][dataType][0][col] || "";
         for (let i = 1; i < newOffers[index][dataType].length; i++) {
           newOffers[index][dataType][i][col] = firstValue;
         }
-      } else if (dataType === 'cardData') {
+      } else if (dataType === "cardData") {
         const cardTypes = Object.keys(newOffers[index][dataType]);
         const firstValue = newOffers[index][dataType][cardTypes[0]][col] || "";
         cardTypes.forEach((cardType) => {
           newOffers[index][dataType][cardType][col] = firstValue;
         });
       }
-  
+
       return newOffers;
     });
   };
@@ -170,41 +171,47 @@ function CocopahDB() {
         type: offer.type,
         tierData: offer.tierData,
         cardData: offer.cardData,
-        cardType: offer.cardType
+        cardType: offer.cardType,
       }));
-  
+
       // Create a FormData object to include all files and special offer data
       const formData = new FormData();
-      if (offerTable) formData.append('offerTable', offerTable);
-      if (activePatrons) formData.append('activePatrons', activePatrons);
-      if (wmyPatrons) formData.append('wmyPatrons', wmyPatrons);
-      if (wsmyPatrons) formData.append('wsmyPatrons', wsmyPatrons);
-      if (seasonalPatrons) formData.append('seasonalPatrons', seasonalPatrons);
-      if (patriotCardPatrons) formData.append('patriotCardPatrons', patriotCardPatrons);
-      if (claTierPatrons) formData.append('claTierPatrons', claTierPatrons);
-  
+      if (offerTable) formData.append("offerTable", offerTable);
+      if (activePatrons) formData.append("activePatrons", activePatrons);
+      if (wmyPatrons) formData.append("wmyPatrons", wmyPatrons);
+      if (wsmyPatrons) formData.append("wsmyPatrons", wsmyPatrons);
+      if (seasonalPatrons) formData.append("seasonalPatrons", seasonalPatrons);
+      if (patriotCardPatrons)
+        formData.append("patriotCardPatrons", patriotCardPatrons);
+      if (claTierPatrons) formData.append("claTierPatrons", claTierPatrons);
+
       // Append the special offer data as a JSON string
-      formData.append('offerData', JSON.stringify(offerData));
-  
+      formData.append("offerData", JSON.stringify(offerData));
+      formData.append("dateValue", dateValue);
+
       // Make the API request to send the data
-      const response = await axios.post(`${API_BASE_URL}/mailing-list-generation`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const response = await axios.post(
+        `${API_BASE_URL}/mailing-list-generation`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
-  
+      );
+
       // Handle the response as needed
-      console.log('Mailing list generation successful:', response.data);
-      alert('Mailing list generation successful!');
+      console.log("Mailing list generation successful:", response.data);
+      alert("Mailing list generation successful!");
     } catch (error) {
-      console.error('Error generating mailing list:', error);
-      alert('Error generating mailing list. Please try again.');
+      console.error("Error generating mailing list:", error);
+      alert("Error generating mailing list. Please try again.");
     }
   };
 
   return (
     <>
-    <Navbar />
+      <Navbar />
       <div className="ml-file-drops">
         <div className="file-header-combo">
           <h4>Offer Table</h4>
@@ -257,11 +264,24 @@ function CocopahDB() {
         </div>
         <div className="file-header-combo">
           <h2>Generate Mailing List</h2>
-          <p>Once all files are uploaded and special offer logic has been filled out<br /> press the submit button to generate the mailing list</p>
-
-          <button onClick={(e) => {
-            submitFiles();
-          }}>Generate Mailing List</button>
+          <p>
+            Once all files are uploaded and special offer logic has been filled
+            out
+            <br /> press the submit button to generate the mailing list
+          </p>
+          <div className="date-col-div">
+            <h5>Tier_points_at_time_of_Mailing_</h5>
+            <input type="text" className="date-col-input" value={dateValue} onChange={(e) => {
+              setDateValue(e.target.value);
+            }}/>
+          </div>
+          <button
+            onClick={(e) => {
+              submitFiles();
+            }}
+          >
+            Generate Mailing List
+          </button>
         </div>
       </div>
 
@@ -407,15 +427,9 @@ function CocopahDB() {
                       <thead>
                         <tr>
                           <th></th>
-                          <th>
-                            Yes/No
-                          </th>
-                          <th>
-                            Amount
-                          </th>
-                          <th>
-                            Time
-                          </th>
+                          <th>Yes/No</th>
+                          <th>Amount</th>
+                          <th>Time</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -482,4 +496,3 @@ function CocopahDB() {
 }
 
 export default CocopahDB;
-

@@ -5,6 +5,19 @@
   color: #fff;
   margin: 25px;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.date-col-input {
+  width: 150px;
+  height: 28px;
+}
+
+.date-col-div {
+  display:flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .ml-file-drops {
@@ -14,9 +27,21 @@
 }
 
 .special-offers input {
-  border: 2px solid #223456;
+  border: 2px solid #223651;
   border-radius: 4px;
   margin: 2px;
+}
+
+.special-offer {
+  background-color: #223651;
+  margin: 10px;
+  border-radius: 8px;
+  padding: 10px;
+  color: #fff;
+}
+
+.header h4 {
+  margin-top: 28px;
 }
 
 .header {

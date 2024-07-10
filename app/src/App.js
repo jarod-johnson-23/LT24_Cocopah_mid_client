@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Homepage />} exact />
-        <Route
+        {/* <Route
           path="/admin_tools"
           element={
             <PrivateRoute>
@@ -22,34 +22,34 @@ function App() {
             </PrivateRoute>
           }
           exact
-        />
+        /> */}
         <Route
           path="/cocopah_database_management"
           element={
-            <PrivateRoute>
+            // <PrivateRoute>
               <CocopahDB />
-            </PrivateRoute>
+            // </PrivateRoute> 
           }
           exact
         />
         <Route
           path="/portal-offer-tool"
           element={
-            <PrivateRoute>
+            // <PrivateRoute>
               <PortalTool />
-            </PrivateRoute>
+            // </PrivateRoute>
           }
           exact
         />
-        {/* <Route
+        <Route
           path="/file_upload"
           element={
-            <PrivateRoute>
+            // <PrivateRoute>
               <FileUpload />
-            </PrivateRoute> 
+            // </PrivateRoute> 
           }
           exact
-        /> */}
+        />
         <Route path="*" element={<Login />} exact />
       </Routes>
     </HashRouter>

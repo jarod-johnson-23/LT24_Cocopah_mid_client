@@ -12,6 +12,7 @@ function Homepage() {
   const [admin, setAdmin] = useState(true);
   const [cocopahDB, setCocopahDB] = useState(true);
   const [portalOfferTool, setPortalOfferTool] = useState(true);
+  const [fileUpload, setFileUpload] = useState(true);
 
   useEffect(() => {
     const validateToken = async () => {
@@ -25,7 +26,7 @@ function Homepage() {
     <div className="homepage-content">
       <Navbar />
       <div className="box-section">
-        {admin && (
+        {/* {admin && (
           <div
             className="card"
             onClick={(e) => {
@@ -39,7 +40,7 @@ function Homepage() {
               <h4>Admin Tools</h4>
             </div>
           </div>
-        )}
+        )} */}
         {cocopahDB && (
           <div
             className="card"
@@ -67,6 +68,21 @@ function Homepage() {
             </div>
             <div className="card-info">
               <h4>Player Portal Offers Tool</h4>
+            </div>
+          </div>
+        )}
+        {fileUpload && (
+          <div
+            className="card"
+            onClick={(e) => {
+              navigate("/file_upload");
+            }}
+          >
+            <div className="img-div" id="cocopah_img">
+              <img src={cocopah_img} alt="cocopah DB service" />
+            </div>
+            <div className="card-info">
+              <h4>Tier Points File Upload</h4>
             </div>
           </div>
         )}

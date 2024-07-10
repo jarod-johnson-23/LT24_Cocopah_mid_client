@@ -10,17 +10,6 @@
   max-width: 500px;
 }
 
-/* Styling for the file drop area */
-.file-area {
-  border: 2px dashed #ccc;
-  padding: 20px;
-  width: 100%;
-  max-width: 600px;
-  text-align: center;
-  margin-bottom: 20px;
-  border-radius: 5px;
-}
-
 /* Container for the radio buttons */
 .radio-buttons {
   display: flex;
@@ -37,6 +26,10 @@
 
 .radio-buttons input[type="radio"] {
   margin-right: 5px;
+  margin: 10px;
+}
+
+.radio-buttons label {
   color: #fff;
 }
 
