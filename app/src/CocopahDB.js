@@ -199,6 +199,7 @@ function CocopahDB() {
             "Content-Type": "multipart/form-data",
           },
           responseType: "blob", // Important to handle binary data
+          timeout: 600000, 
         }
       );
 
