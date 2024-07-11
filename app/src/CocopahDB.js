@@ -15,6 +15,7 @@ function CocopahDB() {
   const [patriotCardPatrons, setPatriotCardPatrons] = useState(null);
   const [claTierPatrons, setClaTierPatrons] = useState(null);
   const [dateValue, setDateValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [specialOffers, setSpecialOffers] = useState(
     Array(5).fill({
@@ -165,6 +166,7 @@ function CocopahDB() {
 
   const submitFiles = async () => {
     try {
+      setIsLoading(true);
       // Gather all special offer data
       const offerData = specialOffers.map((offer, index) => ({
         visible: offer.visible,
@@ -199,7 +201,7 @@ function CocopahDB() {
             "Content-Type": "multipart/form-data",
           },
           responseType: "blob", // Important to handle binary data
-          timeout: 600000, 
+          timeout: 600000,
         }
       );
 
@@ -209,9 +211,11 @@ function CocopahDB() {
 
       // Handle the response as needed
       console.log("Mailing list generation successful");
+      setIsLoading(false);
       alert("Mailing list generation successful!");
     } catch (error) {
       console.error("Error generating mailing list:", error);
+      setIsLoading(false);
       alert("Error generating mailing list. Please try again.");
     }
   };
@@ -287,13 +291,17 @@ function CocopahDB() {
               }}
             />
           </div>
-          <button
-            onClick={(e) => {
-              submitFiles();
-            }}
-          >
-            Generate Mailing List
-          </button>
+          {isLoading ? (
+            <div className="spinner"></div>
+          ) : (
+            <button
+              onClick={(e) => {
+                submitFiles();
+              }}
+            >
+              Generate Mailing List
+            </button>
+          )}
         </div>
       </div>
 
