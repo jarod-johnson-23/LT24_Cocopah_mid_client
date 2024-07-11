@@ -4,6 +4,7 @@ import { API_BASE_URL } from "./config";
 import FileDropComponent from "./components/FileDropComponent";
 import Navbar from "./components/Navbar";
 import { useState } from "react";
+import { saveAs } from "file-saver";
 
 function CocopahDB() {
   const [offerTable, setOfferTable] = useState(null);
@@ -197,11 +198,16 @@ function CocopahDB() {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          responseType: "blob", // Important to handle binary data
         }
       );
 
+      // Create a blob from the response and use FileSaver to download it
+      const blob = new Blob([response.data], { type: "application/zip" });
+      saveAs(blob, "output.zip");
+
       // Handle the response as needed
-      console.log("Mailing list generation successful:", response.data);
+      console.log("Mailing list generation successful");
       alert("Mailing list generation successful!");
     } catch (error) {
       console.error("Error generating mailing list:", error);
@@ -271,9 +277,14 @@ function CocopahDB() {
           </p>
           <div className="date-col-div">
             <h5>Tier_points_at_time_of_Mailing_</h5>
-            <input type="text" className="date-col-input" value={dateValue} onChange={(e) => {
-              setDateValue(e.target.value);
-            }}/>
+            <input
+              type="text"
+              className="date-col-input"
+              value={dateValue}
+              onChange={(e) => {
+                setDateValue(e.target.value);
+              }}
+            />
           </div>
           <button
             onClick={(e) => {
