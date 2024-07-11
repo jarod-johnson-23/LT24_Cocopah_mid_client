@@ -192,7 +192,7 @@ function CocopahDB() {
 
       // Make the API request to send the data
       const response = await axios.post(
-        `${API_BASE_URL}/mailing-list-generation`,
+        `${API_BASE_URL}/generate-mailing-list`,
         formData,
         {
           headers: {
