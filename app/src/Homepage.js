@@ -13,6 +13,7 @@ function Homepage() {
   const [cocopahDB, setCocopahDB] = useState(true);
   const [portalOfferTool, setPortalOfferTool] = useState(true);
   const [fileUpload, setFileUpload] = useState(true);
+  const [offerEdit, setOfferEdit] = useState(true);
 
   useEffect(() => {
     const validateToken = async () => {
@@ -83,6 +84,21 @@ function Homepage() {
             </div>
             <div className="card-info">
               <h4>Tier Points File Upload</h4>
+            </div>
+          </div>
+        )}
+        {offerEdit && (
+          <div
+            className="card"
+            onClick={(e) => {
+              navigate("/offer-edit-tool");
+            }}
+          >
+            <div className="img-div" id="cocopah_img">
+              <img src={cocopah_img} alt="cocopah DB service" />
+            </div>
+            <div className="card-info">
+              <h4>Offer Edit Tool</h4>
             </div>
           </div>
         )}
