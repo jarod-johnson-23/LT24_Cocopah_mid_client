@@ -7,6 +7,7 @@ import Login from "./Login";
 import CocopahDB from "./CocopahDB";
 import FileUpload from "./FileUpload";
 import PortalTool from "./PortalOffersUpload";
+import OfferEditTool from "./OfferEditTool";
 
 function App() {
   return (
@@ -46,6 +47,15 @@ function App() {
           element={
             // <PrivateRoute>
               <FileUpload />
+            // </PrivateRoute> 
+          }
+          exact
+        />
+        <Route
+          path="/offer-edit-tool"
+          element={
+            // <PrivateRoute>
+              <OfferEditTool />
             // </PrivateRoute> 
           }
           exact

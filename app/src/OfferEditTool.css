@@ -1,0 +1,29 @@
+.file-upload-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #223456;
+  margin: 25px;
+  padding: 15px;
+  width: fit-content;
+  border-radius: 8px;
+}
+
+.file-button-combo button {
+  width: 240px;
+  height: 54px;
+  background-color: #3fbeea;
+  border: 1.5px solid #3fbeea;
+  color: #223651;
+  font-size: 18px;
+  transition: 0.15s;
+  border-radius: 4px;
+  font-weight: 900;
+  margin: 10px;
+}
+
+.file-button-combo button:hover {
+  cursor: pointer;
+  background-color: #223651;
+  color: #3fbeea;
+}
