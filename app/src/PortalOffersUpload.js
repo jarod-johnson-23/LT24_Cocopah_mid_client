@@ -8,6 +8,7 @@ import { useState } from "react";
 function PortalOffersUpload() {
   const [file, setFile] = useState(null);
   const [value, setValue] = useState("FUTURE");
+  const [environment, setEnvironment] = useState("DEV"); // Default to DEV
 
   const onFileUpload = (extractedColumns, uploadedFile) => {
     setFile(uploadedFile);
@@ -22,6 +23,7 @@ function PortalOffersUpload() {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("value", value);
+    formData.append("prod", environment === "PROD"); // Pass the environment flag
 
     try {
       const response = await axios.post(`${API_BASE_URL}/query_wp_posts`, formData, {
@@ -71,6 +73,28 @@ function PortalOffersUpload() {
               onChange={(e) => setValue(e.target.value)}
             />
             Future
+          </label>
+        </div>
+        <div className="radio-buttons">
+          <label>
+            <input
+              type="radio"
+              name="environment"
+              value="DEV"
+              checked={environment === "DEV"}
+              onChange={(e) => setEnvironment(e.target.value)}
+            />
+            DEV
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="environment"
+              value="PROD"
+              checked={environment === "PROD"}
+              onChange={(e) => setEnvironment(e.target.value)}
+            />
+            PROD
           </label>
         </div>
         <button onClick={handleSubmit}>Submit</button>
