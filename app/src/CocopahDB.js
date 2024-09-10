@@ -22,6 +22,7 @@ function CocopahDB() {
       visible: false,
       patriotOnly: false,
       type: "Tier-based",
+      qualifying_text: "",
       tierData: Array(20).fill({ yesNo: "", amount: "", time: "" }),
       cardData: { T1: "", T2: "", T3: "" }, // Card types should be updated accordingly
     })
@@ -73,6 +74,7 @@ function CocopahDB() {
               // Clear data if unchecked
               patriotOnly: !offer.visible ? false : offer.patriotOnly,
               type: !offer.visible ? "Tier-based" : offer.type,
+              qualifying_text: !offer.visible ? "" : offer.qualifying_text,
               tierData: !offer.visible
                 ? Array(20).fill({ yesNo: "", amount: "", time: "" })
                 : offer.tierData,
@@ -117,6 +119,14 @@ function CocopahDB() {
       return newOffers;
     });
   };
+
+  const handleQualifyingTextChange = (index, value) => {
+    setSpecialOffers((prevOffers) =>
+      prevOffers.map((offer, i) =>
+        i === index ? { ...offer, qualifying_text: value } : offer
+      )
+    );
+  }
 
   const handleCardDataChange = (index, cardType, col, value) => {
     setSpecialOffers((prevOffers) => {
@@ -334,6 +344,9 @@ function CocopahDB() {
                     <option value="Tier-based">Tier-based</option>
                     <option value="Card-type based">Card-type based</option>
                   </select>
+                </div>
+                <div className="cocopah-text-input">
+                  <input type="text" value={offer.qualifying_text} onChange={(e) => handleQualifyingTextChange(index, e.target.value)}/>
                 </div>
                 {offer.type === "Tier-based" ? (
                   <table>
