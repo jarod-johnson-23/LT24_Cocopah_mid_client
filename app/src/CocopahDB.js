@@ -182,6 +182,7 @@ function CocopahDB() {
         visible: offer.visible,
         patriotOnly: offer.patriotOnly,
         type: offer.type,
+        qualifying_text: offer.qualifying_text,
         tierData: offer.tierData,
         cardData: offer.cardData,
         cardType: offer.cardType,
