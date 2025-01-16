@@ -14,10 +14,11 @@ function Homepage() {
   const [portalOfferTool, setPortalOfferTool] = useState(true);
   const [fileUpload, setFileUpload] = useState(true);
   const [offerEdit, setOfferEdit] = useState(true);
+  const [portalList, setPortalList] = useState(true);
 
   useEffect(() => {
     const validateToken = async () => {
-     return true;
+      return true;
     };
 
     validateToken();
@@ -84,6 +85,21 @@ function Homepage() {
             </div>
             <div className="card-info">
               <h4>Tier Points File Upload</h4>
+            </div>
+          </div>
+        )}
+        {portalList && (
+          <div
+            className="card"
+            onClick={(e) => {
+              navigate("/portal-file-gen");
+            }}
+          >
+            <div className="img-div" id="cocopah_img">
+              <img src={cocopah_img} alt="cocopah DB service" />
+            </div>
+            <div className="card-info">
+              <h4>Portal List Generation</h4>
             </div>
           </div>
         )}

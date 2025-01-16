@@ -8,6 +8,7 @@ import CocopahDB from "./CocopahDB";
 import FileUpload from "./FileUpload";
 import PortalTool from "./PortalOffersUpload";
 import OfferEditTool from "./OfferEditTool";
+import PortalList from "./PortalList";
 
 function App() {
   return (
@@ -28,8 +29,8 @@ function App() {
           path="/cocopah_database_management"
           element={
             // <PrivateRoute>
-              <CocopahDB />
-            // </PrivateRoute> 
+            <CocopahDB />
+            // </PrivateRoute>
           }
           exact
         />
@@ -37,7 +38,7 @@ function App() {
           path="/portal-offer-tool"
           element={
             // <PrivateRoute>
-              <PortalTool />
+            <PortalTool />
             // </PrivateRoute>
           }
           exact
@@ -46,17 +47,18 @@ function App() {
           path="/file_upload"
           element={
             // <PrivateRoute>
-              <FileUpload />
-            // </PrivateRoute> 
+            <FileUpload />
+            // </PrivateRoute>
           }
           exact
         />
+        <Route path="/portal-file-gen" element={<PortalList />} exact />
         <Route
           path="/offer-edit-tool"
           element={
             // <PrivateRoute>
-              <OfferEditTool />
-            // </PrivateRoute> 
+            <OfferEditTool />
+            // </PrivateRoute>
           }
           exact
         />
